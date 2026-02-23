@@ -3,7 +3,8 @@
 - **Framework:** Astro 5.x + TypeScript + Tailwind CSS 4.x + Preact islands
 - **Package manager:** pnpm (use `npx pnpm` if not globally installed)
 - **Init:** `npx pnpm create astro@latest . --template minimal --typescript strict --install --git`
-- **Install deps:** `npx pnpm add @astrojs/preact preact @astrojs/tailwind @astrojs/sitemap`
+- **Install deps:** `npx pnpm add @astrojs/preact preact @astrojs/sitemap @astrojs/vercel`
+- **Install Tailwind (dev):** `npx pnpm add -D @tailwindcss/vite tailwindcss`
 - **Tailwind:** Use `@tailwindcss/vite` plugin (Tailwind 4.x — CSS-first config, no tailwind.config.js)
 - **Dev:** `npx pnpm dev`
 - **Build:** `npx pnpm build`
