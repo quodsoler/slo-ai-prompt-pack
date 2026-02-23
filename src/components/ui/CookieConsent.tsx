@@ -1,16 +1,20 @@
-import { useState, useEffect } from 'preact/hooks';
-import { getConsentState, setConsentState } from '../../lib/cookie-consent';
+import { useState, useEffect, useRef } from 'preact/hooks';
+import { getConsentState, setConsentState, loadGTM } from '../../lib/cookie-consent';
 
 export default function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);
   const [showCustomize, setShowCustomize] = useState(false);
   const [analytics, setAnalytics] = useState(false);
   const [marketing, setMarketing] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const consent = getConsentState();
     if (!consent) {
       setIsVisible(true);
+    } else if (consent.analytics) {
+      // Returning user with analytics consent: load GTM immediately
+      loadGTM();
     }
 
     // Re-open listener for footer link
@@ -25,6 +29,13 @@ export default function CookieConsent() {
       });
     }
   }, []);
+
+  // Focus the dialog when it becomes visible
+  useEffect(() => {
+    if (isVisible && dialogRef.current) {
+      dialogRef.current.focus();
+    }
+  }, [isVisible]);
 
   function acceptAll() {
     setConsentState({ analytics: true, marketing: true });
@@ -45,7 +56,13 @@ export default function CookieConsent() {
   if (!isVisible) return null;
 
   return (
-    <div class="fixed bottom-0 left-0 right-0 z-[60] p-4 md:p-6 bg-surface border-t border-card-border/40 shadow-2xl max-h-[40vh] overflow-y-auto">
+    <div
+      ref={dialogRef}
+      role="dialog"
+      aria-label="Configuración de cookies"
+      tabIndex={-1}
+      class="fixed bottom-0 left-0 right-0 z-[60] p-4 md:p-6 bg-surface border-t border-card-border/40 shadow-2xl max-h-[40vh] overflow-y-auto"
+    >
       <div class="max-w-3xl mx-auto">
         <p class="text-text-secondary text-sm mb-4">
           Usamos cookies para analizar el tráfico y mejorar tu experiencia. Puedes aceptar todas las cookies o solo las necesarias.{' '}
@@ -70,9 +87,11 @@ export default function CookieConsent() {
               </div>
               <button
                 type="button"
+                role="switch"
+                aria-checked={analytics}
                 class={`w-10 h-6 rounded-full transition-colors cursor-pointer ${analytics ? 'bg-primary' : 'bg-card-border'}`}
                 onClick={() => setAnalytics(!analytics)}
-                aria-label={`Cookies analíticas: ${analytics ? 'activadas' : 'desactivadas'}`}
+                aria-label="Cookies analíticas"
               >
                 <span
                   class={`block w-4 h-4 rounded-full bg-white transition-transform ${analytics ? 'translate-x-5' : 'translate-x-1'}`}
@@ -86,9 +105,11 @@ export default function CookieConsent() {
               </div>
               <button
                 type="button"
+                role="switch"
+                aria-checked={marketing}
                 class={`w-10 h-6 rounded-full transition-colors cursor-pointer ${marketing ? 'bg-primary' : 'bg-card-border'}`}
                 onClick={() => setMarketing(!marketing)}
-                aria-label={`Cookies de marketing: ${marketing ? 'activadas' : 'desactivadas'}`}
+                aria-label="Cookies de marketing"
               >
                 <span
                   class={`block w-4 h-4 rounded-full bg-white transition-transform ${marketing ? 'translate-x-5' : 'translate-x-1'}`}

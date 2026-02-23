@@ -25,12 +25,16 @@ export default function Accordion({ items, onExpand }: AccordionProps) {
     <div class="divide-y divide-card-border/30">
       {items.map((item, index) => {
         const isOpen = openIndex === index;
+        const triggerId = `accordion-trigger-${index}`;
+        const panelId = `accordion-panel-${index}`;
         return (
           <div key={index}>
             <button
               type="button"
+              id={triggerId}
               class="w-full flex items-center justify-between py-5 px-1 text-left text-text-primary font-medium hover:text-primary-light transition-colors duration-200 cursor-pointer"
               aria-expanded={isOpen}
+              aria-controls={panelId}
               onClick={() => toggle(index)}
             >
               <span class="pr-4">{item.title}</span>
@@ -45,7 +49,9 @@ export default function Accordion({ items, onExpand }: AccordionProps) {
               </svg>
             </button>
             <div
+              id={panelId}
               role="region"
+              aria-labelledby={triggerId}
               class={`overflow-hidden transition-all duration-200 ease-in-out ${isOpen ? 'max-h-[500px] opacity-100 pb-5' : 'max-h-0 opacity-0'}`}
             >
               <p class="text-text-secondary leading-relaxed px-1">{item.content}</p>

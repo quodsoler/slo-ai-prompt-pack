@@ -41,7 +41,7 @@ export default function ThankYouContent() {
         </div>
       )}
 
-      {!hasBump && (
+      {!hasBump && !hasUpsell && (
         <div class="bg-accent/10 border border-accent/30 rounded-xl p-4">
           <p class="text-accent-light font-medium">{bumpTeaser.title}</p>
           <p class="text-text-secondary text-sm mt-1">{bumpTeaser.description}</p>

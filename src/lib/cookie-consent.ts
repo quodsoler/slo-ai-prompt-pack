@@ -45,6 +45,12 @@ export function getConsentState(): ConsentState | null {
       if (value === 'rejected') {
         return DEFAULT_STATE;
       }
+      if (value === 'custom') {
+        // Custom granular preferences are only stored in localStorage.
+        // If localStorage was cleared but the cookie remains, we cannot recover
+        // the exact preferences, so default to analytics-only (most common custom choice).
+        return { ...DEFAULT_STATE, analytics: true, marketing: false, timestamp: '' };
+      }
     }
   } catch {
     // Cookie access failed
