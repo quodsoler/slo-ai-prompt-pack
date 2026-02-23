@@ -2,7 +2,7 @@
 
 **Project:** Pack de 275+ Prompts IA para Marketing y Negocios -- Sales Funnel Site
 **Stack:** Astro 5.x SSG, TypeScript strict, Tailwind CSS 4.x, Preact islands, Vercel
-**Status:** Phase 11 complete — Full site implementation with 5 pages, 54 files. Spec compliance fixes applied for analytics consent, event tracking, purchase summary, env validation, design tokens, cross-domain linker, and robots.txt. Zero build/lint/type errors.
+**Status:** Phase 11 complete — Full site implementation with 5 pages, 54 files. Spec compliance fixes applied for analytics consent, event tracking, purchase summary, env validation, design tokens, cross-domain linker, and robots.txt. Additional spec compliance fixes applied in tag 0.0.6: GTM returning-user consent, cookie custom fallback, bump teaser guard, LinkedIn share URL, social share icons, title/meta-description length, accordion aria-labelledby, and CookieConsent dialog semantics. Zero build/lint/type errors.
 
 ---
 
@@ -678,6 +678,15 @@ The `data/` reference files contain several inconsistencies with the 12 spec fil
 - [x] **StickyCtaBar touch target**: RESOLVED — Added `min-h-[44px]` and `inline-flex items-center` to StickyCtaBar CTA button.
 - [x] **env.d.ts empty**: RESOLVED — Added full `ImportMetaEnv` interface with all 5 PUBLIC_ env vars.
 - [x] **Cross-domain _gl linker not implemented**: RESOLVED — Modified `handleCtaClick()` to accept an `<a>` element parameter and dispatch `mousedown` event for GTM auto-link decoration before navigation. Updated `CtaButton.astro` and `StickyCtaBar.tsx` to pass link elements. Cleaned up `loadGTM()` in `cookie-consent.ts` to push dataLayer config before loading GTM script.
+- [x] **GTM not loading for returning consenting users**: RESOLVED — `CookieConsent.tsx` `useEffect` now checks `getConsentState()` on mount and calls `loadGTM()` if `consent.analytics` is true. Previously only loaded GTM when consent was newly granted via `setConsentState`.
+- [x] **Cookie 'custom' fallback unhandled**: RESOLVED — `getConsentState()` in `cookie-consent.ts` now handles the `'custom'` cookie value by returning analytics-only consent as a safe default. Previously fell through to `null`, causing the banner to re-appear for users who chose custom preferences and had localStorage cleared.
+- [x] **Bump teaser shown to upsell buyers**: RESOLVED — `ThankYouContent.tsx` guard changed from `!hasBump` to `!hasBump && !hasUpsell`, matching the spec's intended logic that upsell buyers should not see the bump teaser.
+- [x] **LinkedIn share URL missing pre-filled text**: RESOLVED — Added `summary` parameter to LinkedIn share URL in `SocialShareButtons.tsx` using `socialShareText.linkedin` data.
+- [x] **Social share buttons missing platform icons**: RESOLVED — Added inline SVG icons for LinkedIn, Twitter/X, and WhatsApp to `SocialShareButtons.tsx`.
+- [x] **Title tag 61 chars (over limit)**: RESOLVED — Removed space before `€` in `index.astro` title: `"Solo 27€"` instead of `"Solo 27 €"`. Now exactly 60 characters.
+- [x] **Meta description 168 chars (over limit)**: RESOLVED — Shortened to `"Descubre 275+ prompts de IA listos para usar. Diseñados para profesionales y autónomos en España. Marketing, ventas, contenido y más. Ahorra +10h/semana."` (within 160 chars).
+- [x] **Accordion panels missing aria-labelledby**: RESOLVED — Added `id` to trigger buttons, `aria-controls` pointing to panels, and `aria-labelledby` on region panels in `Accordion.tsx`.
+- [x] **CookieConsent missing dialog semantics**: RESOLVED — Added `role="dialog"`, `aria-label`, focus management, `role="switch"` + `aria-checked` on toggle buttons in `CookieConsent.tsx`.
 
 ### Architectural Decisions (Resolved)
 
