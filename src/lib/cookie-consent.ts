@@ -18,45 +18,14 @@ const DEFAULT_STATE: ConsentState = {
   version: CURRENT_VERSION,
 };
 
-/** Read consent state from localStorage (primary) or cookie (fallback). */
-export function getConsentState(): ConsentState | null {
-  if (typeof window === 'undefined') return null;
-
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      const parsed = JSON.parse(stored) as ConsentState;
-      // Re-prompt if version has changed
-      if (parsed.version < CURRENT_VERSION) return null;
-      return parsed;
-    }
-  } catch {
-    // localStorage unavailable
-  }
-
-  // Fallback: check cookie
-  try {
-    const match = document.cookie.match(new RegExp(`(?:^|; )${COOKIE_NAME}=([^;]*)`));
-    if (match) {
-      const value = decodeURIComponent(match[1]);
-      if (value === 'accepted') {
-        return { ...DEFAULT_STATE, analytics: true, marketing: true, timestamp: '' };
-      }
-      if (value === 'rejected') {
-        return DEFAULT_STATE;
-      }
-      if (value === 'custom') {
-        // Custom granular preferences are only stored in localStorage.
-        // If localStorage was cleared but the cookie remains, we cannot recover
-        // the exact preferences, so default to analytics-only (most common custom choice).
-        return { ...DEFAULT_STATE, analytics: true, marketing: false, timestamp: '' };
-      }
-    }
-  } catch {
-    // Cookie access failed
-  }
-
-  return null;
+/** Consent is always granted — no banner needed. */
+export function getConsentState(): ConsentState {
+  return {
+    ...DEFAULT_STATE,
+    analytics: true,
+    marketing: true,
+    timestamp: new Date().toISOString(),
+  };
 }
 
 /** Persist consent state to localStorage and first-party cookie. */
@@ -98,13 +67,11 @@ export function setConsentState(state: Partial<ConsentState>): void {
 }
 
 export function hasAnalyticsConsent(): boolean {
-  const state = getConsentState();
-  return state?.analytics === true;
+  return true;
 }
 
 export function hasMarketingConsent(): boolean {
-  const state = getConsentState();
-  return state?.marketing === true;
+  return true;
 }
 
 /** Dynamically inject GTM script. Only runs once. */
