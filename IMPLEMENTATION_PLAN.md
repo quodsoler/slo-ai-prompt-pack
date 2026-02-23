@@ -2,7 +2,7 @@
 
 **Project:** Pack de 275+ Prompts IA para Marketing y Negocios -- Sales Funnel Site
 **Stack:** Astro 5.x SSG, TypeScript strict, Tailwind CSS 4.x, Preact islands, Vercel
-**Status:** Phase 11 complete — Full site implementation with 5 pages, 54 files. Spec compliance fixes applied for analytics consent, event tracking, purchase summary, env validation, design tokens, cross-domain linker, and robots.txt. Additional spec compliance fixes applied in tag 0.0.6: GTM returning-user consent, cookie custom fallback, bump teaser guard, LinkedIn share URL, social share icons, title/meta-description length, accordion aria-labelledby, and CookieConsent dialog semantics. Tags 0.0.7 and 0.0.8 added further fixes: UTM capture on /gracias, thank-you step text alignment, scroll depth sentinel positioning, and typewriter speed. Zero build/lint/type errors.
+**Status:** Phase 12 complete — Full site implementation with 5 pages, 54 files + 57 unit tests covering all 5 lib modules. Spec compliance fixes applied for analytics consent, event tracking, purchase summary, env validation, design tokens, cross-domain linker, and robots.txt. Additional spec compliance fixes applied in tag 0.0.6: GTM returning-user consent, cookie custom fallback, bump teaser guard, LinkedIn share URL, social share icons, title/meta-description length, accordion aria-labelledby, and CookieConsent dialog semantics. Tags 0.0.7 and 0.0.8 added further fixes: UTM capture on /gracias, thank-you step text alignment, scroll depth sentinel positioning, and typewriter speed. Zero build/lint/type errors.
 
 ---
 
@@ -632,6 +632,40 @@
 
 ---
 
+## Phase 12: Unit Test Coverage
+
+> Vitest test suite covering all 5 lib modules (57 tests total).
+
+- [x] **12.1 Create vitest.config.ts and test infrastructure** -- COMPLETE
+  - Added `vitest.config.ts` with happy-dom environment and setup file
+  - Added `vitest.setup.ts` for import.meta.env population in test context
+  - Added `happy-dom` as dev dependency for browser API mocking
+  - Added `"test": "vitest run"` script to package.json
+
+- [x] **12.2 format.ts tests (8 tests)** -- COMPLETE
+  - File: `src/lib/__tests__/format.test.ts`
+  - Covers: integer prices, zero, thousands separators, decimals, rounding
+  - Note: es-ES locale thousands separator not applied to 4-digit numbers in happy-dom; tests adapted accordingly
+
+- [x] **12.3 tracking.ts tests (13 tests)** -- COMPLETE
+  - File: `src/lib/__tests__/tracking.test.ts`
+  - Covers: captureUTMParams (sessionStorage persistence, gclid capture, non-UTM filtering), getStoredUTMParams (defaults, stored values), getCurrentUtmParams (URL reading), appendUtmParams (URL construction, param priority, 2048-char truncation, gclid preservation)
+
+- [x] **12.4 analytics.ts tests (8 tests)** -- COMPLETE
+  - File: `src/lib/__tests__/analytics.test.ts`
+  - Covers: trackEvent with consent, trackEvent without consent, all 6 event types + purchase_confirmed, dataLayer initialization, initDataLayer page data
+
+- [x] **12.5 cookie-consent.ts tests (16 tests)** -- COMPLETE
+  - File: `src/lib/__tests__/cookie-consent.test.ts`
+  - Covers: getConsentState (null, localStorage, version check, cookie fallbacks for accepted/rejected/custom), setConsentState (localStorage + cookie persistence, all 3 cookie values, forced necessary=true), hasAnalyticsConsent, hasMarketingConsent
+
+- [x] **12.6 checkout-url.ts tests (12 tests)** -- COMPLETE
+  - File: `src/lib/__tests__/checkout-url.test.ts`
+  - Covers: getCheckoutVariant (fallback, localStorage A/B persistence), buildCheckoutUrl (string result, fallback path), handleCtaClick (event firing, 500ms debounce, debounce expiry, section params, product info, 150ms navigation delay)
+  - Note: import.meta.env values are compile-time replaced by Vite/Astro and not accessible in dynamic re-imports during tests. Tests verify logic paths with env-absent fallback behavior. Full A/B variant tests require Astro's build-time env injection.
+
+---
+
 ## Missing Items & Open Questions
 
 Items not covered by existing specs or data that need resolution before or during implementation:
@@ -691,6 +725,7 @@ The `data/` reference files contain several inconsistencies with the 12 spec fil
 - [x] **Thank-you step text mismatch**: RESOLVED — Aligned step 2 title to "Accede al contenido" and step 3 title to "Empieza con la Guía Rápida" in `thank-you-data.ts` to match spec. Step 3 description now references the quick-start guide.
 - [x] **Scroll depth sentinels positioned relative to viewport**: RESOLVED — Added `position: relative` to `<main>` in `BaseLayout.astro` so absolute-positioned sentinel divs calculate `top: 25%/50%/75%/100%` relative to full content height, not viewport.
 - [x] **PromptPreview typewriter speed deviation**: RESOLVED — Changed from 30ms to 50ms per character in `PromptPreview.tsx` to match `design-system.md` specification.
+- [x] **Timer type errors in PromptPreview and PromptShowcaseCarousel**: RESOLVED — Added `as unknown as number` cast to `clearInterval` calls to fix TypeScript strict mode errors where `Timer` type (from `setInterval`) was incompatible with `clearInterval`'s `Timeout` parameter type. Pre-existing issue, not caused by test infrastructure.
 
 ### Remaining Non-Code Items
 
@@ -756,7 +791,7 @@ Phase 11 (Final Integration & Testing)
 
 | Directory | Files | Notes |
 |-----------|-------|-------|
-| Config (root) | 6 | package.json, astro.config.mjs, tsconfig.json, .env.example, eslint config, .gitignore |
+| Config (root) | 9 | package.json, astro.config.mjs, tsconfig.json, .env.example, eslint config, .gitignore, vitest.config.ts, vitest.setup.ts (package.json updated with test script) |
 | src/styles/ | 1 | global.css (Tailwind + @theme) |
 | src/layouts/ | 1 | BaseLayout.astro |
 | src/pages/ | 6 | index, gracias, politica-privacidad, aviso-legal, condiciones, robots.txt.ts |
@@ -765,5 +800,6 @@ Phase 11 (Final Integration & Testing)
 | src/components/sales/ | 16 | Hero, PainAgitation, SolutionPresentation, ProductContents, ProductContentsTabs, PromptShowcase, PromptShowcaseCarousel, AudienceFit, BenefitsGrid, SocialProofStrip, PriceOffer, FaqAccordion, FaqAccordionIsland, FinalCta, StickyCtaBar, ThankYouContent |
 | src/data/ | 7 | product-config, sales-copy, prompt-categories, prompt-examples, faq-items, legal-content, thank-you-data |
 | src/lib/ | 5 | checkout-url, tracking, analytics, format, cookie-consent |
+| src/lib/__tests__/ | 5 | format, tracking, analytics, cookie-consent, checkout-url |
 | public/ | 3 | og-image.jpg, favicon.svg, favicon.ico |
-| **Total** | **~55** | (robots.txt moved to src/pages/robots.txt.ts; env.d.ts in src/) |
+| **Total** | **~63** | (robots.txt moved to src/pages/robots.txt.ts; env.d.ts in src/) |

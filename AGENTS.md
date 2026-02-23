@@ -14,7 +14,7 @@
 
 Run these after implementing to get immediate feedback:
 
-- Tests: `npx pnpm exec vitest run`
+- Tests: `npx pnpm test` (or `npx pnpm exec vitest run`)
 - Typecheck: `npx pnpm exec astro check && npx pnpm exec tsc --noEmit`
 - Lint: `npx pnpm exec eslint src/`
 - Build: `npx pnpm build`

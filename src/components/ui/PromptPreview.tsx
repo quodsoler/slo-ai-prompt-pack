@@ -43,14 +43,14 @@ export default function PromptPreview({ promptText, responseText, isActive }: Pr
         setDisplayedPrompt(promptText.slice(0, charIndex + 1));
         charIndex++;
       } else {
-        clearInterval(typeInterval);
+        clearInterval(typeInterval as unknown as number);
         setIsTyping(false);
         // Show response after typing completes
         setTimeout(() => setShowResponse(true), 300);
       }
     }, 50);
 
-    return () => clearInterval(typeInterval);
+    return () => clearInterval(typeInterval as unknown as number);
   }, [isActive, promptText]);
 
   return (

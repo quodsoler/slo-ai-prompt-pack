@@ -35,7 +35,7 @@ export default function PromptShowcaseCarousel({ examples }: PromptShowcaseCarou
     }, 8000);
 
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (intervalRef.current) clearInterval(intervalRef.current as unknown as number);
     };
   }, [isPaused, examples.length]);
 
