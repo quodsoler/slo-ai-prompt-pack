@@ -2,7 +2,7 @@
 
 **Project:** Pack de 275+ Prompts IA para Marketing y Negocios -- Sales Funnel Site
 **Stack:** Astro 5.x SSG, TypeScript strict, Tailwind CSS 4.x, Preact islands, Vercel
-**Status:** Phase 11 complete — Full site implementation with 5 pages, 54 files. Spec compliance fixes applied for analytics consent, event tracking, and purchase summary. Zero build/lint/type errors.
+**Status:** Phase 11 complete — Full site implementation with 5 pages, 54 files. Spec compliance fixes applied for analytics consent, event tracking, purchase summary, env validation, design tokens, cross-domain linker, and robots.txt. Zero build/lint/type errors.
 
 ---
 
@@ -62,7 +62,8 @@
 - [x] **1.6 Create .env.example and environment variable validation** -- COMPLETE
   - Spec: `specs/site-architecture.md` (Environment Variables), `specs/checkout-integration.md`
   - File: `.env.example` with `PUBLIC_CHECKOUT_URL`, `PUBLIC_CHECKOUT_URL_VARIANT`, `PUBLIC_GA4_MEASUREMENT_ID`, `PUBLIC_GTM_CONTAINER_ID`, `PUBLIC_SITE_URL`
-  - Note: Build must fail with clear error if `PUBLIC_CHECKOUT_URL` is not set
+  - Build-time validation: `env-validation` integration in `astro.config.mjs` fails the build if `PUBLIC_CHECKOUT_URL` is not set (reads `.env` via Node.js `fs`)
+  - File: `src/env.d.ts` with full `ImportMetaEnv` interface declaring all 5 PUBLIC_ env vars
   - Dependencies: 1.1
 
 - [x] **1.7 Create directory structure** -- COMPLETE
@@ -85,7 +86,7 @@
 - [x] **2.1 Define Tailwind 4.x @theme with design tokens** -- COMPLETE
   - Spec: `specs/design-system.md` (Color Palette, Typography, Spacing Scale)
   - File: `src/styles/global.css`
-  - Tokens: `--color-primary`, `--color-accent`, `--color-bg`, `--color-surface`, `--color-card`, `--color-card-border`, `--color-text-primary`, `--color-text-secondary`, `--color-text-muted`, `--color-success`, `--color-warning`, `--color-error`, all gradient tokens
+  - Tokens: `--color-primary`, `--color-accent`, `--color-bg`, `--color-surface`, `--color-card` (rgba(30,41,59,0.5)), `--color-card-border` (rgba(71,85,105,0.3)), `--color-text-primary`, `--color-text-secondary`, `--color-text-muted`, `--color-success`, `--color-warning`, `--color-error`, `--color-primary-hover`, `--color-accent-hover`, gradient tokens (`--gradient-cta`, `--gradient-cta-hover`, `--gradient-hero`, `--gradient-glow`)
   - Dependencies: 1.4
 
 - [x] **2.2 Configure font loading (Inter + JetBrains Mono)** -- COMPLETE
@@ -116,8 +117,8 @@
 - [x] **2.6 Create Card component** -- COMPLETE
   - Spec: `specs/design-system.md` (Component Catalog -- Card)
   - File: `src/components/ui/Card.astro`
-  - backdrop-blur-sm, subtle border, rounded-2xl, optional hover effect
-  - Solid fallback for browsers without `backdrop-blur`
+  - Uses `bg-card` and `border-card-border` directly (color tokens include rgba transparency, no extra opacity modifiers needed), backdrop-blur-sm, rounded-2xl, optional hover effect
+  - Solid fallback via `@supports not (backdrop-filter)` rule in `global.css`
   - Dependencies: 2.1
 
 - [x] **2.7 Create Accordion component (Preact island)** -- COMPLETE
@@ -373,7 +374,7 @@
   - Spec: `specs/sales-page-sections.md` (Section 11: StickyCtaBar), `specs/design-system.md` (Component Catalog -- StickyCtaBar)
   - File: `src/components/sales/StickyCtaBar.tsx` (Preact)
   - Behavior: fixed bottom bar on mobile (`lg:hidden`), shows after hero scrolls out (IntersectionObserver), hides near hero or when PriceOffer/FinalCta visible, 72px height, backdrop-blur, z-50
-  - Content: price text left + compact CTA right
+  - Content: price text left + compact CTA right (CTA button has `min-h-[44px]` and `inline-flex items-center` for WCAG touch target compliance)
   - Tracking: `cta_clicked` with `section: 'sticky_bar'`
   - Dependencies: 2.1, 5.1, 5.3
 
@@ -480,10 +481,10 @@
   - Include: `/`, `/politica-privacidad`, `/aviso-legal`, `/condiciones`
   - Dependencies: 1.3
 
-- [x] **9.4 Create robots.txt** -- COMPLETE (created in public/)
+- [x] **9.4 Create robots.txt** -- COMPLETE (dynamic Astro endpoint)
   - Spec: `specs/seo-content.md` (Robots)
-  - File: `public/robots.txt`
-  - Content: `User-agent: * / Allow: / / Sitemap: https://[DOMAIN]/sitemap-index.xml`
+  - File: `src/pages/robots.txt.ts` (dynamic endpoint reading `PUBLIC_SITE_URL` at build time; replaces former static `public/robots.txt`)
+  - Content: `User-agent: * / Allow: / / Sitemap: ${PUBLIC_SITE_URL}/sitemap-index.xml`
   - Dependencies: 1.7
 
 - [ ] **9.5 Create OG image placeholder** -- PLACEHOLDER (needs design)
@@ -546,9 +547,9 @@
   - Append to checkout URL when CTA clicked
   - Dependencies: 5.2
 
-- [x] **10.6 Configure cross-domain tracking (Astro <-> Systeme.io)** -- COMPLETE (linker support in checkout-url.ts)
+- [x] **10.6 Configure cross-domain tracking (Astro <-> Systeme.io)** -- COMPLETE (mousedown event dispatch for GTM auto-link decoration)
   - Spec: `specs/analytics-tracking.md` (AC-2), `specs/checkout-integration.md` (GA4 Cross-Domain Linker)
-  - GTM auto-link or manual `_gl` parameter decoration on checkout URLs
+  - `handleCtaClick()` accepts `<a>` element parameter and dispatches `mousedown` event for GTM auto-link decoration before navigation. `CtaButton.astro` and `StickyCtaBar.tsx` pass link elements. `loadGTM()` in `cookie-consent.ts` pushes dataLayer config before loading GTM script.
   - Dependencies: 10.1, 5.1
 
 - [x] **10.7 Implement Facebook Pixel via GTM (consent-gated)** -- COMPLETE (consent-gated, GTM-side config)
@@ -615,9 +616,9 @@
   - Verify cascade layers support, `backdrop-blur` fallback
   - Dependencies: 11.3
 
-- [x] **11.9 Environment variable validation test** -- COMPLETE (checkout-url.ts warns when PUBLIC_CHECKOUT_URL missing)
+- [x] **11.9 Environment variable validation test** -- COMPLETE (env-validation integration + checkout-url.ts fallback)
   - Spec: `specs/site-architecture.md` (Edge Cases), `specs/checkout-integration.md` (Edge Cases)
-  - Build must fail with clear error if `PUBLIC_CHECKOUT_URL` is not set
+  - Build fails with clear error if `PUBLIC_CHECKOUT_URL` is not set (via `env-validation` Astro integration in `astro.config.mjs`)
   - CTA buttons render `href="#"` with console warning in dev when env is missing
   - Dependencies: 1.6, 11.3
 
@@ -670,6 +671,13 @@ The `data/` reference files contain several inconsistencies with the 12 spec fil
 - [x] **FAQ tracking script ran before Preact hydration**: RESOLVED — Replaced fragile DOM `querySelectorAll` script with `FaqAccordionIsland.tsx` Preact wrapper that uses Accordion's `onExpand` callback for reliable tracking.
 - [x] **Purchase summary missing from thank-you page**: RESOLVED — Added order summary card showing "Tu compra: Pack de 275+ Prompts IA para Marketing y Negocios" and "27 EUR — Pago único, acceso de por vida" in `ThankYouContent.tsx`.
 - [x] **UTM param truncation order misleading**: RESOLVED — Fixed `priorityOrder` array in `tracking.ts` to place `gclid` last (highest priority). Truncation logic was already correct (drops `utm_term` first, preserves `gclid`).
+- [x] **robots.txt hardcoded domain**: RESOLVED — Converted from static `public/robots.txt` to dynamic Astro endpoint `src/pages/robots.txt.ts` that reads `PUBLIC_SITE_URL` env var at build time.
+- [x] **Build-time env validation missing**: RESOLVED — Added `env-validation` integration in `astro.config.mjs` that fails the build if `PUBLIC_CHECKOUT_URL` is not set. Uses Node.js `fs` to read `.env` file.
+- [x] **Design tokens missing rgba/gradient values**: RESOLVED — Updated `global.css` `@theme`: `--color-card` now `rgba(30,41,59,0.5)`, `--color-card-border` now `rgba(71,85,105,0.3)`, added `--color-primary-hover`, `--color-accent-hover`, and 4 gradient tokens (`--gradient-cta`, `--gradient-cta-hover`, `--gradient-hero`, `--gradient-glow`).
+- [x] **Backdrop-blur no fallback**: RESOLVED — Added `@supports not (backdrop-filter: blur(4px))` rule in `global.css` with solid `--color-surface` fallback.
+- [x] **StickyCtaBar touch target**: RESOLVED — Added `min-h-[44px]` and `inline-flex items-center` to StickyCtaBar CTA button.
+- [x] **env.d.ts empty**: RESOLVED — Added full `ImportMetaEnv` interface with all 5 PUBLIC_ env vars.
+- [x] **Cross-domain _gl linker not implemented**: RESOLVED — Modified `handleCtaClick()` to accept an `<a>` element parameter and dispatch `mousedown` event for GTM auto-link decoration before navigation. Updated `CtaButton.astro` and `StickyCtaBar.tsx` to pass link elements. Cleaned up `loadGTM()` in `cookie-consent.ts` to push dataLayer config before loading GTM script.
 
 ### Architectural Decisions (Resolved)
 
@@ -729,11 +737,11 @@ Phase 11 (Final Integration & Testing)
 | Config (root) | 6 | package.json, astro.config.mjs, tsconfig.json, .env.example, eslint config, .gitignore |
 | src/styles/ | 1 | global.css (Tailwind + @theme) |
 | src/layouts/ | 1 | BaseLayout.astro |
-| src/pages/ | 5 | index, gracias, politica-privacidad, aviso-legal, condiciones |
+| src/pages/ | 6 | index, gracias, politica-privacidad, aviso-legal, condiciones, robots.txt.ts |
 | src/components/ui/ | 8 | Button, Badge, Card, Accordion, PromptPreview, CtaButton, CookieConsent, SocialShareButtons |
 | src/components/layout/ | 2 | Header, Footer |
 | src/components/sales/ | 16 | Hero, PainAgitation, SolutionPresentation, ProductContents, ProductContentsTabs, PromptShowcase, PromptShowcaseCarousel, AudienceFit, BenefitsGrid, SocialProofStrip, PriceOffer, FaqAccordion, FaqAccordionIsland, FinalCta, StickyCtaBar, ThankYouContent |
 | src/data/ | 7 | product-config, sales-copy, prompt-categories, prompt-examples, faq-items, legal-content, thank-you-data |
 | src/lib/ | 5 | checkout-url, tracking, analytics, format, cookie-consent |
-| public/ | 4 | robots.txt, og-image.jpg, favicon.svg, favicon.ico |
-| **Total** | **~54** | |
+| public/ | 3 | og-image.jpg, favicon.svg, favicon.ico |
+| **Total** | **~55** | (robots.txt moved to src/pages/robots.txt.ts; env.d.ts in src/) |

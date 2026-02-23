@@ -9,6 +9,6 @@ const { hover = false, class: className = '' } = Astro.props;
 const hoverClass = hover ? 'hover:border-accent/30 transition-colors duration-200' : '';
 ---
 
-<div class={`bg-card/50 backdrop-blur-sm border border-card-border/30 rounded-2xl p-6 ${hoverClass} ${className}`}>
+<div class={`bg-card backdrop-blur-sm border border-card-border rounded-2xl p-6 ${hoverClass} ${className}`}>
   <slot />
 </div>

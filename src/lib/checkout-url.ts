@@ -67,9 +67,13 @@ export function buildCheckoutUrl(_section: string): string {
   return appendUtmParams(url, utms);
 }
 
-/** Debounced click handler for CTA buttons. Fires consent-gated analytics then navigates. */
+/**
+ * Debounced click handler for CTA buttons.
+ * Fires consent-gated analytics, then navigates.
+ * Pass the <a> element to enable GTM cross-domain auto-link decoration (_gl parameter).
+ */
 let lastClickTime = 0;
-export function handleCtaClick(section: string, url: string): void {
+export function handleCtaClick(section: string, url: string, element?: HTMLAnchorElement): void {
   const now = Date.now();
   if (now - lastClickTime < 500) return; // debounce 500ms
   lastClickTime = now;
@@ -96,6 +100,17 @@ export function handleCtaClick(section: string, url: string): void {
 
   // Delay navigation to let GTM process the dataLayer events
   setTimeout(() => {
-    window.location.href = url;
+    if (element) {
+      // Dispatch mousedown to trigger GTM auto-link decoration.
+      // GTM listens for mousedown on <a> tags and decorates href with _gl parameter
+      // for configured cross-domain tracking (systeme.io).
+      element.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+      // Give GTM a frame to process and modify the href
+      requestAnimationFrame(() => {
+        window.location.href = element.href;
+      });
+    } else {
+      window.location.href = url;
+    }
   }, 150);
 }

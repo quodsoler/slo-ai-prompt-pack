@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'preact/hooks';
+import { useState, useEffect, useRef } from 'preact/hooks';
 import { buildCheckoutUrl, handleCtaClick } from '../../lib/checkout-url';
 
 export default function StickyCtaBar() {
@@ -46,11 +46,13 @@ export default function StickyCtaBar() {
     };
   }, []);
 
+  const linkRef = useRef<HTMLAnchorElement>(null);
+
   function onClick(e: Event) {
     e.preventDefault();
     const url = buildCheckoutUrl('sticky_bar');
     if (url !== '#') {
-      handleCtaClick('sticky_bar', url);
+      handleCtaClick('sticky_bar', url, linkRef.current ?? undefined);
     }
   }
 
@@ -69,9 +71,10 @@ export default function StickyCtaBar() {
           <p class="text-xs text-text-muted">Pago único</p>
         </div>
         <a
+          ref={linkRef}
           href={url}
           onClick={onClick}
-          class="px-5 py-2.5 text-sm font-semibold rounded-xl text-white bg-linear-to-br from-primary to-accent-dark shadow-[0_0_15px_rgba(147,51,234,0.3)] hover:shadow-[0_0_25px_rgba(147,51,234,0.5)] transition-all duration-200"
+          class="px-5 py-2.5 text-sm font-semibold rounded-xl text-white min-h-[44px] inline-flex items-center bg-linear-to-br from-primary to-accent-dark shadow-[0_0_15px_rgba(147,51,234,0.3)] hover:shadow-[0_0_25px_rgba(147,51,234,0.5)] transition-all duration-200"
         >
           Quiero Mis Prompts
         </a>
