@@ -28,6 +28,13 @@ export const productConfig = {
   guarantee:
     'Compra sin ningún riesgo. Si en los próximos 30 días sientes que el pack no te ha ahorrado al menos 10 veces lo que has pagado, te devolvemos el 100% de tu dinero. Sin preguntas. Sin formularios. Sin complicaciones.',
 
+  upsell: {
+    name: 'Sistema Completo de IA',
+    price: 17,
+    description:
+      'Lleva tu productividad al siguiente nivel con plantillas avanzadas de automatización, workflows completos y estrategias de IA para escalar tu negocio.',
+  },
+
   ctaLabels: {
     hero: 'Quiero Mis 275+ Prompts Ahora — 27 €',
     priceOffer: 'Sí, quiero mis 275+ prompts por solo 27 €',

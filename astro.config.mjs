@@ -23,9 +23,9 @@ const envValidation = {
   name: 'env-validation',
   hooks: {
     'astro:build:start': () => {
-      if (!getEnvVar('PUBLIC_CHECKOUT_URL')) {
+      if (!getEnvVar('STRIPE_SECRET_KEY')) {
         throw new Error(
-          'BUILD ERROR: PUBLIC_CHECKOUT_URL environment variable is required.\n' +
+          'BUILD ERROR: STRIPE_SECRET_KEY environment variable is required.\n' +
           'Set it in .env or your deployment environment.\n' +
           'See .env.example for reference.'
         );

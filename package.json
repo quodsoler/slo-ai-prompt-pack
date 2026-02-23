@@ -16,7 +16,9 @@
     "@astrojs/vercel": "^9.0.4",
     "astro": "^5.17.3",
     "canvas-confetti": "^1.9.4",
-    "preact": "^10.28.4"
+    "preact": "^10.28.4",
+    "resend": "^6.9.2",
+    "stripe": "^20.3.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",

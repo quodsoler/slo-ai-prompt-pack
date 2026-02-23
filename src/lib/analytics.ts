@@ -15,7 +15,14 @@ export type AnalyticsEvent =
     }
   | {
       name: 'purchase_confirmed';
-      params: { page: string; has_bump: boolean; has_upsell: boolean };
+      params: {
+        page: string;
+        has_bump: boolean;
+        has_upsell: boolean;
+        transaction_id?: string;
+        value?: number;
+        currency?: string;
+      };
     };
 
 declare global {

@@ -1,11 +1,52 @@
 ---
+export const prerender = false;
+
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Card from '../components/ui/Card.astro';
 import ThankYouContent from '../components/sales/ThankYouContent.tsx';
 import SocialShareButtons from '../components/ui/SocialShareButtons.tsx';
 import { accessSteps, thankYouHeading, thankYouMessage } from '../data/thank-you-data';
+import { getStripe } from '../lib/stripe';
 
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://example.com';
+
+// Validate session_id server-side
+const sessionId = Astro.url.searchParams.get('session_id');
+const hasUpsellParam = Astro.url.searchParams.get('upsell') === '1';
+
+if (!sessionId) {
+  return Astro.redirect('/');
+}
+
+let amountPaid = 0;
+let lineItems: { description: string; amount: number; quantity: number }[] = [];
+let showUpsell = false;
+
+try {
+  const stripe = getStripe();
+  const session = await stripe.checkout.sessions.retrieve(sessionId, {
+    expand: ['line_items'],
+  });
+
+  if (session.payment_status !== 'paid') {
+    return Astro.redirect('/');
+  }
+
+  amountPaid = (session.amount_total ?? 0) / 100;
+
+  if (session.line_items?.data) {
+    lineItems = session.line_items.data.map((item) => ({
+      description: item.description ?? 'Producto',
+      amount: (item.amount_total ?? 0) / 100,
+      quantity: item.quantity ?? 1,
+    }));
+  }
+
+  // Show upsell if this was the main purchase (not already an upsell) and upsell not yet purchased
+  showUpsell = !hasUpsellParam && session.metadata?.type !== 'upsell';
+} catch {
+  return Astro.redirect('/');
+}
 ---
 
 <BaseLayout
@@ -28,9 +69,16 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://example.com';
       <h1 class="text-3xl md:text-4xl font-bold mb-4">{thankYouHeading}</h1>
       <p class="text-text-secondary text-lg mb-10">{thankYouMessage}</p>
 
-      <!-- Conditional content (Preact island) -->
+      <!-- Order summary + upsell (Preact island) -->
       <div class="mb-10">
-        <ThankYouContent client:load />
+        <ThankYouContent
+          client:load
+          lineItems={lineItems}
+          amountPaid={amountPaid}
+          showUpsell={showUpsell}
+          sessionId={sessionId}
+          hasUpsell={hasUpsellParam}
+        />
       </div>
 
       <!-- 3-step access guide -->
@@ -62,6 +110,10 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://example.com';
   </div>
 </BaseLayout>
 
+<script is:inline define:vars={{ sessionId, amountPaid, hasUpsell: hasUpsellParam }}>
+  window.__purchaseData = { sessionId, amountPaid, hasUpsell };
+</script>
+
 <script>
   import { trackEvent, initDataLayer } from '../lib/analytics';
   import { captureUTMParams } from '../lib/tracking';
@@ -75,14 +127,17 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://example.com';
     loadGTM();
   }
 
-  // Fire purchase event
-  const params = new URLSearchParams(window.location.search);
+  // Fire purchase event with server-validated data
+  const data = (window as unknown as { __purchaseData: { sessionId: string; amountPaid: number; hasUpsell: boolean } }).__purchaseData;
   trackEvent({
     name: 'purchase_confirmed',
     params: {
       page: '/gracias',
-      has_bump: params.get('bump') === '1',
-      has_upsell: params.get('upsell') === '1',
+      has_bump: false,
+      has_upsell: data.hasUpsell,
+      transaction_id: data.sessionId,
+      value: data.amountPaid,
+      currency: 'EUR',
     },
   });
 
