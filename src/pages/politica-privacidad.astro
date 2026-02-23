@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { privacyPolicy, cookieTable } from '../data/legal-content';
+---
+
+<BaseLayout
+  title="Política de Privacidad | Pack de 275+ Prompts IA"
+  description="Política de privacidad del Pack de 275+ Prompts IA para Marketing y Negocios. Información sobre el tratamiento de datos personales conforme al RGPD."
+  canonicalPath="/politica-privacidad"
+>
+  <article class="py-12 md:py-16 px-4">
+    <div class="max-w-3xl mx-auto prose prose-invert">
+      <h1 class="text-3xl font-bold mb-2">{privacyPolicy.title}</h1>
+      <p class="text-text-muted text-sm mb-10">Última actualización: {privacyPolicy.lastUpdated}</p>
+
+      {privacyPolicy.sections.map((section) => (
+        <div class="mb-8">
+          <h2 class="text-xl font-semibold text-text-primary mb-4">{section.heading}</h2>
+          <div class="text-text-secondary leading-relaxed whitespace-pre-line">{section.content}</div>
+        </div>
+      ))}
+
+      <!-- Cookie table -->
+      <div class="overflow-x-auto mb-8">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-card-border/40">
+              <th class="text-left py-3 pr-4 text-text-primary font-semibold">Cookie</th>
+              <th class="text-left py-3 pr-4 text-text-primary font-semibold">Proveedor</th>
+              <th class="text-left py-3 pr-4 text-text-primary font-semibold">Finalidad</th>
+              <th class="text-left py-3 pr-4 text-text-primary font-semibold">Tipo</th>
+              <th class="text-left py-3 text-text-primary font-semibold">Duración</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cookieTable.map((cookie) => (
+              <tr class="border-b border-card-border/20">
+                <td class="py-3 pr-4 text-text-secondary font-mono text-xs">{cookie.name}</td>
+                <td class="py-3 pr-4 text-text-secondary">{cookie.provider}</td>
+                <td class="py-3 pr-4 text-text-secondary">{cookie.purpose}</td>
+                <td class="py-3 pr-4 text-text-muted">{cookie.type}</td>
+                <td class="py-3 text-text-muted">{cookie.duration}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

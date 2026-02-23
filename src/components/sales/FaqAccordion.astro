@@ -1,0 +1,37 @@
+---
+import Accordion from '../ui/Accordion.tsx';
+import { faqItems } from '../../data/faq-items';
+
+const accordionItems = faqItems.map((item) => ({
+  title: item.question,
+  content: item.answer,
+}));
+---
+
+<section id="faq" class="py-16 md:py-24 px-4 bg-surface/50">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-2xl md:text-3xl font-bold text-center mb-12">
+      Preguntas Frecuentes
+    </h2>
+
+    <Accordion items={accordionItems} client:visible />
+  </div>
+</section>
+
+<script>
+  import { trackEvent } from '../../lib/analytics';
+
+  // Track FAQ expand events via custom event on accordion buttons
+  document.querySelectorAll('#faq button[aria-expanded]').forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+      const isExpanding = btn.getAttribute('aria-expanded') === 'false';
+      if (isExpanding) {
+        const questionText = btn.textContent?.trim().slice(0, 100) || '';
+        trackEvent({
+          name: 'faq_expanded',
+          params: { question_text: questionText, question_index: index },
+        });
+      }
+    });
+  });
+</script>

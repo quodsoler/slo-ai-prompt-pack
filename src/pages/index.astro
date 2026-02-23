@@ -1,13 +1,109 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sales/Hero.astro';
+import PainAgitation from '../components/sales/PainAgitation.astro';
+import SolutionPresentation from '../components/sales/SolutionPresentation.astro';
+import ProductContents from '../components/sales/ProductContents.astro';
+import PromptShowcase from '../components/sales/PromptShowcase.astro';
+import AudienceFit from '../components/sales/AudienceFit.astro';
+import BenefitsGrid from '../components/sales/BenefitsGrid.astro';
+import SocialProofStrip from '../components/sales/SocialProofStrip.astro';
+import PriceOffer from '../components/sales/PriceOffer.astro';
+import FaqAccordion from '../components/sales/FaqAccordion.astro';
+import FinalCta from '../components/sales/FinalCta.astro';
+import StickyCtaBar from '../components/sales/StickyCtaBar.tsx';
+import { productConfig } from '../data/product-config';
+import { faqItems } from '../data/faq-items';
 ---
 
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pack de 275+ Prompts IA para Marketing y Negocios</title>
-  </head>
-  <body>
-    <h1>Pack de 275+ Prompts IA para Marketing y Negocios</h1>
-  </body>
-</html>
+<BaseLayout
+  title="Pack de 275+ Prompts IA para Marketing y Negocios | Solo 27 €"
+  description="Descubre 275+ prompts de IA listos para copiar y pegar. Diseñados para profesionales y autónomos en España. Marketing, ventas, contenido y más. Ahorra +10 horas/semana."
+  canonicalPath="/"
+>
+  <Fragment slot="head">
+    <!-- Product JSON-LD -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: productConfig.name,
+      description: 'Colección de 275+ prompts de IA diseñados para profesionales y autónomos en España. Marketing, copywriting, gestión de negocio y social media.',
+      offers: {
+        '@type': 'Offer',
+        price: productConfig.price,
+        priceCurrency: productConfig.currency,
+        availability: 'https://schema.org/InStock',
+      },
+    })} />
+
+    <!-- FAQPage JSON-LD -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqItems.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
+    })} />
+  </Fragment>
+
+  <Hero />
+  <PainAgitation />
+  <SolutionPresentation />
+  <ProductContents />
+  <PromptShowcase />
+  <AudienceFit />
+  <BenefitsGrid />
+  <SocialProofStrip />
+  <PriceOffer />
+  <FaqAccordion />
+  <FinalCta />
+  <StickyCtaBar client:load />
+
+  <!-- Scroll depth tracking sentinels -->
+  <div data-scroll-depth="25" class="absolute" style="top: 25%; left: 0; width: 1px; height: 1px;" aria-hidden="true"></div>
+  <div data-scroll-depth="50" class="absolute" style="top: 50%; left: 0; width: 1px; height: 1px;" aria-hidden="true"></div>
+  <div data-scroll-depth="75" class="absolute" style="top: 75%; left: 0; width: 1px; height: 1px;" aria-hidden="true"></div>
+  <div data-scroll-depth="100" class="absolute" style="bottom: 0; left: 0; width: 1px; height: 1px;" aria-hidden="true"></div>
+</BaseLayout>
+
+<script>
+  import { trackEvent, initDataLayer } from '../lib/analytics';
+  import { captureUTMParams } from '../lib/tracking';
+  import { getConsentState, loadGTM } from '../lib/cookie-consent';
+
+  // Initialize
+  initDataLayer();
+  captureUTMParams();
+
+  // Load GTM if consent already given
+  const consent = getConsentState();
+  if (consent?.analytics) {
+    loadGTM();
+  }
+
+  // Scroll depth tracking
+  const scrolled = new Set<string>();
+  const sentinels = document.querySelectorAll<HTMLElement>('[data-scroll-depth]');
+  if (sentinels.length > 0) {
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          const percent = (entry.target as HTMLElement).dataset.scrollDepth!;
+          if (!scrolled.has(percent)) {
+            scrolled.add(percent);
+            trackEvent({
+              name: 'scroll_depth',
+              params: { percent: Number(percent) as 25 | 50 | 75 | 100, page_path: '/' },
+            });
+          }
+        }
+      }
+    });
+    sentinels.forEach((el) => observer.observe(el));
+  }
+</script>

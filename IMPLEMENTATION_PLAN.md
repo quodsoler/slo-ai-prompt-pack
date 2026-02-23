@@ -2,7 +2,7 @@
 
 **Project:** Pack de 275+ Prompts IA para Marketing y Negocios -- Sales Funnel Site
 **Stack:** Astro 5.x SSG, TypeScript strict, Tailwind CSS 4.x, Preact islands, Vercel
-**Status:** Phase 1 complete -- Astro project initialized with all dependencies, Tailwind 4.x, TypeScript strict, ESLint, Vitest. Build passes.
+**Status:** Phase 8 complete -- All pages, components, data files, libraries, and legal compliance implemented. 5 pages build successfully.
 
 ---
 
@@ -82,24 +82,24 @@
 
 > Tailwind theme tokens, base styles, typography, and all reusable UI components.
 
-- [ ] **2.1 Define Tailwind 4.x @theme with design tokens**
+- [x] **2.1 Define Tailwind 4.x @theme with design tokens** -- COMPLETE
   - Spec: `specs/design-system.md` (Color Palette, Typography, Spacing Scale)
   - File: `src/styles/global.css`
   - Tokens: `--color-primary`, `--color-accent`, `--color-bg`, `--color-surface`, `--color-card`, `--color-card-border`, `--color-text-primary`, `--color-text-secondary`, `--color-text-muted`, `--color-success`, `--color-warning`, `--color-error`, all gradient tokens
   - Dependencies: 1.4
 
-- [ ] **2.2 Configure font loading (Inter + JetBrains Mono)**
+- [x] **2.2 Configure font loading (Inter + JetBrains Mono)** -- COMPLETE
   - Spec: `specs/design-system.md` (Typography, Font Families)
   - Load via Google Fonts with `font-display: swap`, preload critical subset
   - `size-adjust` for CLS mitigation
   - Dependencies: 2.1
 
-- [ ] **2.3 Create base typography and global styles**
+- [x] **2.3 Create base typography and global styles** -- COMPLETE
   - Spec: `specs/design-system.md` (Type Scale, Line Heights, Spanish Formatting)
   - File: `src/styles/global.css` -- responsive type scale, `overflow-wrap: break-word`, `prefers-reduced-motion` media query for disabling all animations
   - Dependencies: 2.1, 2.2
 
-- [ ] **2.4 Create Button component (3 variants)**
+- [x] **2.4 Create Button component (3 variants)** -- COMPLETE
   - Spec: `specs/design-system.md` (Component Catalog -- Button)
   - File: `src/components/ui/Button.astro`
   - Variants: primary (gradient CTA with glow), secondary (outline), ghost
@@ -107,34 +107,34 @@
   - Min 56px touch target for primary
   - Dependencies: 2.1
 
-- [ ] **2.5 Create Badge component (3 variants)**
+- [x] **2.5 Create Badge component (3 variants)** -- COMPLETE
   - Spec: `specs/design-system.md` (Component Catalog -- Badge)
   - File: `src/components/ui/Badge.astro`
   - Variants: purple (default), blue (accent), green (success/trust)
   - Dependencies: 2.1
 
-- [ ] **2.6 Create Card component**
+- [x] **2.6 Create Card component** -- COMPLETE
   - Spec: `specs/design-system.md` (Component Catalog -- Card)
   - File: `src/components/ui/Card.astro`
   - backdrop-blur-sm, subtle border, rounded-2xl, optional hover effect
   - Solid fallback for browsers without `backdrop-blur`
   - Dependencies: 2.1
 
-- [ ] **2.7 Create Accordion component (Preact island)**
+- [x] **2.7 Create Accordion component (Preact island)** -- COMPLETE
   - Spec: `specs/design-system.md` (Component Catalog -- Accordion)
   - File: `src/components/ui/Accordion.tsx` (Preact)
   - Single-expand mode, aria-expanded, role="region", chevron rotation animation
   - `client:visible` hydration
   - Dependencies: 2.1, 1.2
 
-- [ ] **2.8 Create PromptPreview component (terminal-style, Preact island)**
+- [x] **2.8 Create PromptPreview component (terminal-style, Preact island)** -- COMPLETE
   - Spec: `specs/design-system.md` (Component Catalog -- PromptPreview)
   - File: `src/components/ui/PromptPreview.tsx` (Preact)
   - Terminal chrome (3 dots), JetBrains Mono font, typewriter animation, fade-in response
   - Respects `prefers-reduced-motion`
   - Dependencies: 2.1, 2.2, 1.2
 
-- [ ] **2.9 Create CtaButton component (shared CTA pattern)**
+- [x] **2.9 Create CtaButton component (shared CTA pattern)** -- COMPLETE
   - Spec: `specs/checkout-integration.md` (CTA Component Integration)
   - File: `src/components/ui/CtaButton.astro`
   - Renders `<a>` with `href` from `PUBLIC_CHECKOUT_URL` at build time
@@ -148,7 +148,7 @@
 
 > TypeScript const exports in src/data/ derived from data/ reference files.
 
-- [ ] **3.1 Create product-config.ts**
+- [x] **3.1 Create product-config.ts** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Data Files table), `data/sales-funnel/landing-page-copy/sales-page-copy.md`
   - File: `src/data/product-config.ts`
   - Exports: product name ("Pack de 275+ Prompts IA para Marketing y Negocios"), price (27), original value, value stack items, guarantee text, CTA labels, social proof text, headline, subheadline
@@ -156,28 +156,28 @@
   - **CRITICAL:** Use "275+" as the prompt count everywhere, NOT "200+" (see Data Discrepancies section below). Use spec value stack totals (~EUR 2,450), NOT the sales-page-copy.md value (EUR 582).
   - Dependencies: 1.7
 
-- [ ] **3.2 Create sales-copy.ts**
+- [x] **3.2 Create sales-copy.ts** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Data Files table)
   - File: `src/data/sales-copy.ts`
   - Exports: `painPoints` array, `differentiators` array, `audienceFit`/`audienceNotFit` arrays, `benefits` array (with icon identifiers), `finalCta` object
   - Source: `sales-page-copy.md` Sections 2, 3, 6, 7, 11
   - Dependencies: 1.7
 
-- [ ] **3.3 Create prompt-categories.ts**
+- [x] **3.3 Create prompt-categories.ts** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Section 4: ProductContents)
   - File: `src/data/prompt-categories.ts`
   - Exports: structured categories (Marketing 105, Business 105, Social Media 65) with subcategories and 2-3 sample prompt titles each
   - Source: `sales-page-copy.md` Section 4, `data/product-content/`
   - Dependencies: 1.7
 
-- [ ] **3.4 Create prompt-examples.ts**
+- [x] **3.4 Create prompt-examples.ts** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Section 5: PromptShowcase)
   - File: `src/data/prompt-examples.ts`
   - Exports: 3 showcase prompts with full prompt text and response preview
   - Source: `sales-page-copy.md` Section 5
   - Dependencies: 1.7
 
-- [ ] **3.5 Create faq-items.ts**
+- [x] **3.5 Create faq-items.ts** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Section 9: FaqAccordion)
   - File: `src/data/faq-items.ts`
   - Exports: 8 question/answer pairs (typed array)
@@ -185,14 +185,14 @@
   - Also used by FAQPage JSON-LD schema
   - Dependencies: 1.7
 
-- [ ] **3.6 Create legal-content.ts**
+- [x] **3.6 Create legal-content.ts** -- COMPLETE
   - Spec: `specs/legal-compliance.md` (Legal Page Implementation)
   - File: `src/data/legal-content.ts`
   - Exports: privacy policy, legal notice, terms and conditions text in Spanish with `[BRACKET]` placeholders
   - Cookie table data for privacy policy
   - Dependencies: 1.7
 
-- [ ] **3.7 Create thank-you-data.ts**
+- [x] **3.7 Create thank-you-data.ts** -- COMPLETE
   - Spec: `specs/thank-you-page.md` (3-Step Access Guide, Social Sharing)
   - File: `src/data/thank-you-data.ts`
   - Exports: 3-step guide content, social share text (LinkedIn, Twitter/X, WhatsApp), order summary text, bump teaser text
@@ -205,21 +205,21 @@
 
 > BaseLayout, Header, Footer -- the shell used by all 5 pages.
 
-- [ ] **4.1 Create BaseLayout.astro**
+- [x] **4.1 Create BaseLayout.astro** -- COMPLETE
   - Spec: `specs/site-architecture.md` (Project Structure), `specs/seo-content.md`, `specs/analytics-tracking.md`
   - File: `src/layouts/BaseLayout.astro`
   - Props: `title`, `description`, `ogImage`, `noindex`, `canonicalPath`
   - Includes: `<html lang="es">`, UTF-8, viewport meta, font preloads, global CSS import, conditional `noindex` meta, canonical `<link>`, hreflang, Open Graph tags, Twitter Card tags, GTM conditional script (consent-gated), dataLayer initialization, slot for page content
   - Dependencies: 2.1, 2.2, 2.3
 
-- [ ] **4.2 Create Header component**
+- [x] **4.2 Create Header component** -- COMPLETE
   - Spec: `specs/site-architecture.md` (Semantic HTML)
   - File: `src/components/layout/Header.astro`
   - Minimal: product name/logo, no complex navigation (sales page doesn't need nav distraction)
   - Semantic `<header>` element
   - Dependencies: 2.1
 
-- [ ] **4.3 Create Footer component**
+- [x] **4.3 Create Footer component** -- COMPLETE
   - Spec: `specs/legal-compliance.md` (Footer Legal Links), `specs/site-architecture.md` (US-5)
   - File: `src/components/layout/Footer.astro`
   - Links to: `/politica-privacidad`, `/aviso-legal`, `/condiciones`
@@ -234,34 +234,34 @@
 
 > Utility modules for checkout URLs, analytics, tracking, and formatting.
 
-- [ ] **5.1 Create checkout-url.ts**
+- [x] **5.1 Create checkout-url.ts** -- COMPLETE
   - Spec: `specs/checkout-integration.md` (CTA URL Builder, A/B Price Test)
   - File: `src/lib/checkout-url.ts`
   - Exports: `buildCheckoutUrl(options: CheckoutUrlOptions): string`, `getCheckoutVariant()`
   - Logic: base URL from env, UTM pass-through, A/B variant (localStorage with try-catch), URL length limit (2048 chars), debounced click handler
   - Dependencies: 5.2, 1.6
 
-- [ ] **5.2 Create tracking.ts (UTM handling)**
+- [x] **5.2 Create tracking.ts (UTM handling)** -- COMPLETE
   - Spec: `specs/checkout-integration.md` (UTM Parameter Pass-Through), `specs/analytics-tracking.md` (AC-7)
   - File: `src/lib/tracking.ts`
   - Exports: `getCurrentUtmParams()`, `appendUtmParams()`, `captureUTMParams()`, `getStoredUTMParams()`
   - Stores in sessionStorage with try-catch, handles `gclid`
   - Dependencies: 1.7
 
-- [ ] **5.3 Create analytics.ts (GA4 event helpers)**
+- [x] **5.3 Create analytics.ts (GA4 event helpers)** -- COMPLETE
   - Spec: `specs/analytics-tracking.md` (AC-5, Event Helpers)
   - File: `src/lib/analytics.ts`
   - Exports: typed `trackEvent(event: AnalyticsEvent)` function, consent check before dataLayer push
   - Events: `cta_clicked`, `scroll_depth`, `faq_expanded`, `checkout_started`, `prompt_showcase_viewed`, `social_share_clicked`, `purchase_confirmed`
   - Dependencies: 1.7
 
-- [ ] **5.4 Create format.ts (Spanish number formatting)**
+- [x] **5.4 Create format.ts (Spanish number formatting)** -- COMPLETE
   - Spec: `specs/design-system.md` (Spanish Formatting Conventions)
   - File: `src/lib/format.ts`
   - Exports: `formatPrice(amount: number): string` (dot thousands, comma decimals, EUR suffix)
   - Dependencies: 1.7
 
-- [ ] **5.5 Create cookie-consent.ts (consent state management)**
+- [x] **5.5 Create cookie-consent.ts (consent state management)** -- COMPLETE
   - Spec: `specs/legal-compliance.md` (Cookie Consent Component), `specs/analytics-tracking.md` (AC-6)
   - File: `src/lib/cookie-consent.ts`
   - Exports: `getConsentState()`, `setConsentState()`, `hasAnalyticsConsent()`, `hasMarketingConsent()`, `loadGTM()`
@@ -274,7 +274,7 @@
 
 > 11 section components, assembled in index.astro. Build in narrative order.
 
-- [ ] **6.1 Create Hero.astro (Section 1)**
+- [x] **6.1 Create Hero.astro (Section 1)** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Section 1: Hero)
   - File: `src/components/sales/Hero.astro`
   - Content: pre-headline stat, H1 headline, subheadline, primary CTA, social proof line
@@ -284,21 +284,21 @@
   - **Note:** Social proof line "Ya lo usan mas de [X] profesionales" requires a concrete number or conditional display (see Missing Items below)
   - Dependencies: 2.4, 2.9, 3.1, 4.1
 
-- [ ] **6.2 Create PainAgitation.astro (Section 2)**
+- [x] **6.2 Create PainAgitation.astro (Section 2)** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Section 2: PainAgitation)
   - File: `src/components/sales/PainAgitation.astro`
   - Content: "Esto te suena, verdad?" heading, 5 pain point blocks with left-border accent
   - Data from: `src/data/sales-copy.ts` -> `painPoints`
   - Dependencies: 2.1, 3.2
 
-- [ ] **6.3 Create SolutionPresentation.astro (Section 3)**
+- [x] **6.3 Create SolutionPresentation.astro (Section 3)** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Section 3: SolutionPresentation)
   - File: `src/components/sales/SolutionPresentation.astro`
   - Content: product introduction heading, opening paragraph, 5 differentiators with checkmark icons
   - Data from: `src/data/sales-copy.ts` -> `differentiators`
   - Dependencies: 2.1, 2.5, 3.2
 
-- [ ] **6.4 Create ProductContents.astro (Section 4, with Preact island)**
+- [x] **6.4 Create ProductContents.astro (Section 4, with Preact island)** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Section 4: ProductContents)
   - Files: `src/components/sales/ProductContents.astro`, `src/components/sales/ProductContentsTabs.tsx` (Preact)
   - Content: "Que Incluye el Pack" heading, tabbed/accordion interface with 3 categories, bonus items
@@ -307,7 +307,7 @@
   - Hydration: `client:visible`
   - Dependencies: 2.5, 2.6, 2.7, 3.3
 
-- [ ] **6.5 Create PromptShowcase.astro (Section 5, with Preact island)**
+- [x] **6.5 Create PromptShowcase.astro (Section 5, with Preact island)** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Section 5: PromptShowcase)
   - Files: `src/components/sales/PromptShowcase.astro`, `src/components/sales/PromptShowcaseCarousel.tsx` (Preact)
   - Content: "Mira lo que puedes hacer en menos de 2 minutos" heading, 3 rotating terminal-style examples
@@ -318,14 +318,14 @@
   - Tracking: `prompt_showcase_viewed` event
   - Dependencies: 2.8, 3.4, 5.3
 
-- [ ] **6.6 Create AudienceFit.astro (Section 6)**
+- [x] **6.6 Create AudienceFit.astro (Section 6)** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Section 6: AudienceFit)
   - File: `src/components/sales/AudienceFit.astro`
   - Content: "Es Este Pack Para Ti?" heading, two-column layout (green checkmarks / red X), 5 "yes" items + 3 "no" items
   - Data from: `src/data/sales-copy.ts` -> `audienceFit`, `audienceNotFit`
   - Dependencies: 2.1, 3.2
 
-- [ ] **6.7 Create BenefitsGrid.astro (Section 7)**
+- [x] **6.7 Create BenefitsGrid.astro (Section 7)** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Section 7: BenefitsGrid)
   - File: `src/components/sales/BenefitsGrid.astro`
   - Content: "Lo que cambia cuando tienes los prompts correctos" heading, 6-card responsive grid (1/2/3 cols)
@@ -333,7 +333,7 @@
   - Uses Card component
   - Dependencies: 2.6, 3.2
 
-- [ ] **6.7b Create SocialProofStrip.astro (between Sections 7 and 8)**
+- [x] **6.7b Create SocialProofStrip.astro (between Sections 7 and 8)** -- COMPLETE
   - Spec: `specs/google-ads-campaign.md` (sitelink `#opiniones`), `specs/sales-page-sections.md` (social proof)
   - File: `src/components/sales/SocialProofStrip.astro`
   - Content: horizontal strip with trust indicators -- "Compatible con ChatGPT, Claude y cualquier IA", "Garantia de 30 dias", AI platform text badges, "Pago unico -- sin suscripcion"
@@ -342,7 +342,7 @@
   - When real testimonials become available, this can be expanded into a full testimonials section
   - Dependencies: 2.1, 2.5
 
-- [ ] **6.8 Create PriceOffer.astro (Section 8)**
+- [x] **6.8 Create PriceOffer.astro (Section 8)** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Section 8: PriceOffer)
   - File: `src/components/sales/PriceOffer.astro`
   - Content: value stack table, comparison paragraph, strikethrough "67 EUR", large "27 EUR" in text-price, "Pago unico" subtitle, guarantee badge, CTA button
@@ -351,7 +351,7 @@
   - Tracking: `cta_clicked` with `section: 'price_offer'`
   - Dependencies: 2.4, 2.5, 2.9, 3.1, 5.3
 
-- [ ] **6.9 Create FaqAccordion.astro (Section 9, with Preact island)**
+- [x] **6.9 Create FaqAccordion.astro (Section 9, with Preact island)** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Section 9: FaqAccordion)
   - Files: `src/components/sales/FaqAccordion.astro`, wraps `Accordion.tsx`
   - Content: "Preguntas Frecuentes" heading, 8+ FAQ items
@@ -361,7 +361,7 @@
   - Tracking: `faq_expanded` event with `question_index`
   - Dependencies: 2.7, 3.5, 5.3
 
-- [ ] **6.10 Create FinalCta.astro (Section 10)**
+- [x] **6.10 Create FinalCta.astro (Section 10)** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Section 10: FinalCta)
   - File: `src/components/sales/FinalCta.astro`
   - Content: urgency banner, two-option comparison, closing headline, CTA button, guarantee reminder, P.S. paragraph
@@ -369,7 +369,7 @@
   - Tracking: `cta_clicked` with `section: 'final'`
   - Dependencies: 2.4, 2.9, 3.2, 5.3
 
-- [ ] **6.11 Create StickyCtaBar.tsx (Section 11, Preact island)**
+- [x] **6.11 Create StickyCtaBar.tsx (Section 11, Preact island)** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Section 11: StickyCtaBar), `specs/design-system.md` (Component Catalog -- StickyCtaBar)
   - File: `src/components/sales/StickyCtaBar.tsx` (Preact)
   - Behavior: fixed bottom bar on mobile (`lg:hidden`), shows after hero scrolls out (IntersectionObserver), hides near hero or when PriceOffer/FinalCta visible, 72px height, backdrop-blur, z-50
@@ -377,7 +377,7 @@
   - Tracking: `cta_clicked` with `section: 'sticky_bar'`
   - Dependencies: 2.1, 5.1, 5.3
 
-- [ ] **6.12 Assemble index.astro (sales page)**
+- [x] **6.12 Assemble index.astro (sales page)** -- COMPLETE
   - Spec: `specs/sales-page-sections.md` (Page Assembly)
   - File: `src/pages/index.astro`
   - Import all 12 section components (11 original + SocialProofStrip), wrap in BaseLayout with title/description from `specs/seo-content.md`
@@ -391,7 +391,7 @@
 
 > Cookie consent banner, 3 legal pages, GDPR/LOPD/LSSI compliance.
 
-- [ ] **7.1 Create CookieConsent.tsx (Preact island)**
+- [x] **7.1 Create CookieConsent.tsx (Preact island)** -- COMPLETE
   - Spec: `specs/legal-compliance.md` (Cookie Consent Banner), `specs/analytics-tracking.md` (AC-6)
   - File: `src/components/ui/CookieConsent.tsx`
   - UI: bottom-fixed banner with "Aceptar todas", "Rechazar todas", "Personalizar" buttons
@@ -402,20 +402,20 @@
   - Link to `/politica-privacidad`
   - Dependencies: 5.5, 2.1
 
-- [ ] **7.2 Create /politica-privacidad page**
+- [x] **7.2 Create /politica-privacidad page** -- COMPLETE
   - Spec: `specs/legal-compliance.md` (Privacy Policy Page)
   - File: `src/pages/politica-privacidad.astro`
   - Content from: `src/data/legal-content.ts`
   - All GDPR Article 13/14 disclosures, cookie table, `[BRACKET]` placeholders for business data
   - Dependencies: 3.6, 4.1
 
-- [ ] **7.3 Create /aviso-legal page**
+- [x] **7.3 Create /aviso-legal page** -- COMPLETE
   - Spec: `specs/legal-compliance.md` (Legal Notice Page)
   - File: `src/pages/aviso-legal.astro`
   - Content: LSSI Article 10 identification, `[BRACKET]` placeholders
   - Dependencies: 3.6, 4.1
 
-- [ ] **7.4 Create /condiciones page**
+- [x] **7.4 Create /condiciones page** -- COMPLETE
   - Spec: `specs/legal-compliance.md` (Terms & Conditions Page)
   - File: `src/pages/condiciones.astro`
   - Content: digital product terms, 30-day refund, 14-day withdrawal, IVA 21%, `[BRACKET]` placeholders
@@ -427,19 +427,19 @@
 
 > Post-purchase /gracias page with confetti, conditional content, social sharing.
 
-- [ ] **8.1 Install canvas-confetti**
+- [x] **8.1 Install canvas-confetti** -- COMPLETE
   - Spec: `specs/thank-you-page.md` (Confetti Animation)
   - Command: `npx pnpm add canvas-confetti` + types
   - Dependencies: 1.2
 
-- [ ] **8.2 Create ThankYouContent.tsx (Preact island)**
+- [x] **8.2 Create ThankYouContent.tsx (Preact island)** -- COMPLETE
   - Spec: `specs/thank-you-page.md` (Conditional Content Component)
   - File: `src/components/sales/ThankYouContent.tsx`
   - Logic: reads `?bump=1`, `?upsell=1` query params, renders conditional product confirmations or bump teaser
   - Hydration: `client:load`
   - Dependencies: 3.7, 2.1
 
-- [ ] **8.3 Create SocialShareButtons component**
+- [x] **8.3 Create SocialShareButtons component** -- COMPLETE
   - Spec: `specs/thank-you-page.md` (Social Sharing Section), `specs/product-delivery.md` (AC-5)
   - File: `src/components/ui/SocialShareButtons.tsx` (Preact)
   - 3 buttons: LinkedIn, Twitter/X, WhatsApp with pre-filled Spanish text
@@ -447,7 +447,7 @@
   - Tracking: `social_share_clicked` event with platform parameter
   - Dependencies: 5.3, 3.7
 
-- [ ] **8.4 Create /gracias page**
+- [x] **8.4 Create /gracias page** -- COMPLETE
   - Spec: `specs/thank-you-page.md`, `specs/product-delivery.md`
   - File: `src/pages/gracias.astro`
   - Content: green checkmark + "Compra confirmada!", confetti on load, 3-step access guide (cards/timeline), conditional content island, social sharing section

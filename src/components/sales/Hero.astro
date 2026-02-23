@@ -1,0 +1,43 @@
+---
+import CtaButton from '../ui/CtaButton.astro';
+import Badge from '../ui/Badge.astro';
+import { productConfig } from '../../data/product-config';
+---
+
+<section id="hero" class="relative py-16 md:py-24 px-4 overflow-hidden">
+  <!-- Gradient background -->
+  <div class="absolute inset-0 bg-linear-to-b from-surface to-bg" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(147,51,234,0.15),transparent_70%)]" aria-hidden="true"></div>
+
+  <div class="relative max-w-4xl mx-auto text-center">
+    <!-- Pre-headline -->
+    <p class="text-sm md:text-base text-text-secondary mb-6 max-w-2xl mx-auto">
+      {productConfig.preheadline}
+    </p>
+
+    <!-- Badge -->
+    <div class="mb-6">
+      <Badge variant="purple">275+ Prompts Profesionales</Badge>
+    </div>
+
+    <!-- H1 -->
+    <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight mb-6">
+      {productConfig.headline}
+    </h1>
+
+    <!-- Subheadline -->
+    <p class="text-lg md:text-xl text-text-secondary max-w-3xl mx-auto mb-10 leading-relaxed">
+      {productConfig.subheadline}
+    </p>
+
+    <!-- CTA -->
+    <div class="mb-8">
+      <CtaButton section="hero" label={productConfig.ctaLabels.hero} />
+    </div>
+
+    <!-- Social proof -->
+    <p class="text-sm text-text-muted">
+      {productConfig.socialProof}
+    </p>
+  </div>
+</section>

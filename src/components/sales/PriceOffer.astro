@@ -1,0 +1,63 @@
+---
+import CtaButton from '../ui/CtaButton.astro';
+import Badge from '../ui/Badge.astro';
+import { productConfig } from '../../data/product-config';
+import { formatPrice } from '../../lib/format';
+---
+
+<section id="oferta" class="py-16 md:py-24 px-4">
+  <div class="max-w-3xl mx-auto text-center">
+    <h2 class="text-2xl md:text-3xl font-bold mb-12">
+      Hagamos cuentas rápidas
+    </h2>
+
+    <!-- Value stack table -->
+    <div class="bg-surface/80 border border-card-border/30 rounded-2xl p-6 md:p-8 mb-10 text-left">
+      <div class="space-y-3">
+        {productConfig.valueStack.map((item) => (
+          <div class="flex justify-between items-center py-2 border-b border-card-border/20 last:border-0">
+            <span class="text-text-secondary">{item.item}</span>
+            <span class="text-text-muted line-through text-sm">{formatPrice(item.value)}</span>
+          </div>
+        ))}
+      </div>
+      <div class="flex justify-between items-center pt-4 mt-4 border-t border-card-border/40">
+        <span class="font-semibold text-text-primary">Valor total</span>
+        <span class="text-text-muted line-through">{formatPrice(productConfig.valueStack.reduce((sum, i) => sum + i.value, 0))}</span>
+      </div>
+    </div>
+
+    <!-- Comparison -->
+    <p class="text-text-secondary mb-8 leading-relaxed max-w-2xl mx-auto">
+      Un consultor de marketing te cobra entre 500 y 2.000 € por una estrategia de contenido.
+      Una agencia te cobra entre 300 y 800 € al mes solo por gestionar tus redes.
+      Este pack te da todo lo que necesitas por una fracción del coste.
+    </p>
+
+    <!-- Pricing -->
+    <div class="mb-4">
+      <p class="text-text-muted line-through text-lg">
+        Precio habitual: {formatPrice(productConfig.originalPrice)}
+      </p>
+    </div>
+    <p class="text-5xl md:text-7xl font-extrabold text-text-primary mb-2">
+      {productConfig.price} <span class="text-3xl md:text-4xl">€</span>
+    </p>
+    <p class="text-text-secondary mb-8">
+      Pago único. Acceso de por vida. Sin suscripciones.
+    </p>
+
+    <!-- Guarantee badge -->
+    <div class="mb-8">
+      <Badge variant="green">Garantía de 30 días — sin preguntas</Badge>
+    </div>
+
+    <!-- CTA -->
+    <CtaButton section="price_offer" label={productConfig.ctaLabels.priceOffer} />
+
+    <!-- Order bump teaser -->
+    <p class="mt-6 text-sm text-text-muted">
+      En el checkout podrás añadir 50 prompts extra de automatización por solo 17 €
+    </p>
+  </div>
+</section>

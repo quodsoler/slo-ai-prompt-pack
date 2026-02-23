@@ -1,0 +1,21 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="w-full py-8 px-4 md:px-6 border-t border-card-border/20 mt-16">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-text-muted">
+    <p>&copy; {currentYear} Pack de 275+ Prompts IA. Todos los derechos reservados.</p>
+    <nav class="flex flex-wrap items-center gap-4">
+      <a href="/politica-privacidad" class="hover:text-text-secondary transition-colors">Política de Privacidad</a>
+      <a href="/aviso-legal" class="hover:text-text-secondary transition-colors">Aviso Legal</a>
+      <a href="/condiciones" class="hover:text-text-secondary transition-colors">Términos y Condiciones</a>
+      <button
+        type="button"
+        class="hover:text-text-secondary transition-colors cursor-pointer"
+        id="reopen-cookie-consent"
+      >
+        Configuración de cookies
+      </button>
+    </nav>
+  </div>
+</footer>
