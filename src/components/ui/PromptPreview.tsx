@@ -48,7 +48,7 @@ export default function PromptPreview({ promptText, responseText, isActive }: Pr
         // Show response after typing completes
         setTimeout(() => setShowResponse(true), 300);
       }
-    }, 30);
+    }, 50);
 
     return () => clearInterval(typeInterval);
   }, [isActive, promptText]);
