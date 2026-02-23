@@ -64,9 +64,11 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://example.com';
 
 <script>
   import { trackEvent, initDataLayer } from '../lib/analytics';
+  import { captureUTMParams } from '../lib/tracking';
   import { getConsentState, loadGTM } from '../lib/cookie-consent';
 
   initDataLayer();
+  captureUTMParams();
 
   const consent = getConsentState();
   if (consent?.analytics) {

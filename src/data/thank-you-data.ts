@@ -7,15 +7,15 @@ export const accessSteps = [
   },
   {
     step: 2,
-    title: 'Accede a tu pack',
+    title: 'Accede al contenido',
     description:
-      'Haz clic en el enlace de Notion para acceder a tu workspace completo. También encontrarás el PDF descargable para tener una copia offline.',
+      'Abre el enlace de Notion para acceder a tu workspace completo o descarga el PDF para tener una copia offline.',
   },
   {
     step: 3,
-    title: 'Usa tu primer prompt',
+    title: 'Empieza con la Guía Rápida',
     description:
-      'Abre ChatGPT o Claude, ve a la categoría que más te interese y copia y pega tu primer prompt. En menos de 2 minutos tendrás tu primer resultado profesional.',
+      'Comienza con la guía de inicio rápido y prueba tus primeros 3 prompts. En menos de 2 minutos tendrás tu primer resultado profesional.',
   },
 ] as const;
 
