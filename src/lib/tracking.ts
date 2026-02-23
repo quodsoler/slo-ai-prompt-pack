@@ -76,14 +76,13 @@ export function getCurrentUtmParams(): UtmParams {
 export function appendUtmParams(baseUrl: string, params: UtmParams): string {
   const url = new URL(baseUrl);
 
-  // Priority order for truncation (lowest priority first)
   const priorityOrder: (keyof UtmParams)[] = [
-    'gclid',
     'utm_source',
     'utm_medium',
     'utm_campaign',
     'utm_content',
     'utm_term',
+    'gclid',
   ];
 
   for (const key of priorityOrder) {

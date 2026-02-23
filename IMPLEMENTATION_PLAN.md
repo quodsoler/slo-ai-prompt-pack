@@ -2,7 +2,7 @@
 
 **Project:** Pack de 275+ Prompts IA para Marketing y Negocios -- Sales Funnel Site
 **Stack:** Astro 5.x SSG, TypeScript strict, Tailwind CSS 4.x, Preact islands, Vercel
-**Status:** Phase 11 complete -- Full site implementation with 5 pages, 53 files, zero build/lint/type errors. Ready for deployment.
+**Status:** Phase 11 complete — Full site implementation with 5 pages, 54 files. Spec compliance fixes applied for analytics consent, event tracking, and purchase summary. Zero build/lint/type errors.
 
 ---
 
@@ -662,6 +662,15 @@ The `data/` reference files contain several inconsistencies with the 12 spec fil
 
 - [x] **Social proof number**: RESOLVED -- Replace "[X]" placeholder with non-numeric statement "Usado por profesionales de marketing en toda Espana". See Architectural Decisions section.
 
+### Spec Compliance Fixes (Resolved)
+
+- [x] **CTA events bypass consent gate**: RESOLVED — `handleCtaClick()` in `checkout-url.ts` now uses `trackEvent()` from `analytics.ts` which checks `hasAnalyticsConsent()` before pushing to dataLayer. Previously pushed directly to `window.dataLayer`.
+- [x] **CTA event parameter names mismatch**: RESOLVED — Changed from `cta_section`/`cta_url` to `section`/`destination_url` matching the `AnalyticsEvent` type definition in `analytics.ts`.
+- [x] **`prompt_showcase_viewed` event never fired**: RESOLVED — Added tracking in `PromptShowcaseCarousel.tsx` using `useEffect` on `activeIndex` changes. Each example is tracked once per page view.
+- [x] **FAQ tracking script ran before Preact hydration**: RESOLVED — Replaced fragile DOM `querySelectorAll` script with `FaqAccordionIsland.tsx` Preact wrapper that uses Accordion's `onExpand` callback for reliable tracking.
+- [x] **Purchase summary missing from thank-you page**: RESOLVED — Added order summary card showing "Tu compra: Pack de 275+ Prompts IA para Marketing y Negocios" and "27 EUR — Pago único, acceso de por vida" in `ThankYouContent.tsx`.
+- [x] **UTM param truncation order misleading**: RESOLVED — Fixed `priorityOrder` array in `tracking.ts` to place `gclid` last (highest priority). Truncation logic was already correct (drops `utm_term` first, preserves `gclid`).
+
 ### Architectural Decisions (Resolved)
 
 - [x] **Section C: Social Media prompts**: RESOLVED -- Include all 3 sections in `prompt-categories.ts`: Marketing (105), Business (105), Social Media (65). The ProductContents tabs must show 3 tabs. Source: `data/product-content/section-c-socialmedia/`.
@@ -723,8 +732,8 @@ Phase 11 (Final Integration & Testing)
 | src/pages/ | 5 | index, gracias, politica-privacidad, aviso-legal, condiciones |
 | src/components/ui/ | 8 | Button, Badge, Card, Accordion, PromptPreview, CtaButton, CookieConsent, SocialShareButtons |
 | src/components/layout/ | 2 | Header, Footer |
-| src/components/sales/ | 15 | Hero, PainAgitation, SolutionPresentation, ProductContents, ProductContentsTabs, PromptShowcase, PromptShowcaseCarousel, AudienceFit, BenefitsGrid, SocialProofStrip, PriceOffer, FaqAccordion, FinalCta, StickyCtaBar, ThankYouContent |
+| src/components/sales/ | 16 | Hero, PainAgitation, SolutionPresentation, ProductContents, ProductContentsTabs, PromptShowcase, PromptShowcaseCarousel, AudienceFit, BenefitsGrid, SocialProofStrip, PriceOffer, FaqAccordion, FaqAccordionIsland, FinalCta, StickyCtaBar, ThankYouContent |
 | src/data/ | 7 | product-config, sales-copy, prompt-categories, prompt-examples, faq-items, legal-content, thank-you-data |
 | src/lib/ | 5 | checkout-url, tracking, analytics, format, cookie-consent |
 | public/ | 4 | robots.txt, og-image.jpg, favicon.svg, favicon.ico |
-| **Total** | **~53** | |
+| **Total** | **~54** | |

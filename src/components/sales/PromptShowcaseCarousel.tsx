@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'preact/hooks';
 import PromptPreview from '../ui/PromptPreview';
+import { trackEvent } from '../../lib/analytics';
 import type { PromptExample } from '../../data/prompt-examples';
 
 interface PromptShowcaseCarouselProps {
@@ -10,6 +11,20 @@ export default function PromptShowcaseCarousel({ examples }: PromptShowcaseCarou
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const trackedIndices = useRef<Set<number>>(new Set());
+
+  // Track prompt_showcase_viewed when a new example becomes visible
+  useEffect(() => {
+    if (trackedIndices.current.has(activeIndex)) return;
+    trackedIndices.current.add(activeIndex);
+    trackEvent({
+      name: 'prompt_showcase_viewed',
+      params: {
+        prompt_category: examples[activeIndex].category,
+        prompt_index: activeIndex,
+      },
+    });
+  }, [activeIndex, examples]);
 
   // Auto-rotate every 8 seconds (enough time for typewriter + response)
   useEffect(() => {

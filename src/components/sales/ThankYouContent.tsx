@@ -17,6 +17,14 @@ export default function ThankYouContent() {
 
   return (
     <div class="space-y-4">
+      {/* Order summary */}
+      <div class="bg-surface border border-card-border rounded-xl p-4">
+        <p class="text-text-primary font-semibold">
+          Tu compra: Pack de 275+ Prompts IA para Marketing y Negocios
+        </p>
+        <p class="text-text-secondary text-sm mt-1">27 EUR — Pago único, acceso de por vida</p>
+      </div>
+
       {hasBump && (
         <div class="bg-success/10 border border-success/30 rounded-xl p-4">
           <p class="text-success font-medium">
@@ -33,7 +41,7 @@ export default function ThankYouContent() {
         </div>
       )}
 
-      {!hasBump && !hasUpsell && (
+      {!hasBump && (
         <div class="bg-accent/10 border border-accent/30 rounded-xl p-4">
           <p class="text-accent-light font-medium">{bumpTeaser.title}</p>
           <p class="text-text-secondary text-sm mt-1">{bumpTeaser.description}</p>

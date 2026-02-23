@@ -1,4 +1,5 @@
 import { getStoredUTMParams, appendUtmParams } from './tracking';
+import { trackEvent } from './analytics';
 
 const VARIANT_KEY = 'checkout_variant';
 
@@ -66,29 +67,34 @@ export function buildCheckoutUrl(_section: string): string {
   return appendUtmParams(url, utms);
 }
 
-/** Debounced click handler for CTA buttons. Fires analytics then navigates. */
+/** Debounced click handler for CTA buttons. Fires consent-gated analytics then navigates. */
 let lastClickTime = 0;
 export function handleCtaClick(section: string, url: string): void {
   const now = Date.now();
   if (now - lastClickTime < 500) return; // debounce 500ms
   lastClickTime = now;
 
-  // Fire analytics via sendBeacon if available
-  if (typeof window !== 'undefined' && window.dataLayer) {
-    window.dataLayer.push({
-      event: 'cta_clicked',
-      cta_section: section,
-      cta_url: url,
-    });
-    window.dataLayer.push({
-      event: 'checkout_started',
+  const { variant } = getCheckoutVariant();
+
+  // Fire consent-gated analytics events via trackEvent
+  trackEvent({
+    name: 'cta_clicked',
+    params: {
+      section,
+      destination_url: url,
+      variant: variant !== 'default' ? variant : undefined,
+    },
+  });
+  trackEvent({
+    name: 'checkout_started',
+    params: {
       source_section: section,
       product_name: 'Pack 275+ Prompts IA',
       product_price: 27,
-    });
-  }
+    },
+  });
 
-  // Small delay to let beacon/dataLayer flush, then navigate
+  // Delay navigation to let GTM process the dataLayer events
   setTimeout(() => {
     window.location.href = url;
   }, 150);

@@ -1,6 +1,6 @@
 ---
-import Accordion from '../ui/Accordion.tsx';
 import { faqItems } from '../../data/faq-items';
+import FaqAccordionIsland from './FaqAccordionIsland.tsx';
 
 const accordionItems = faqItems.map((item) => ({
   title: item.question,
@@ -14,24 +14,6 @@ const accordionItems = faqItems.map((item) => ({
       Preguntas Frecuentes
     </h2>
 
-    <Accordion items={accordionItems} client:visible />
+    <FaqAccordionIsland items={accordionItems} client:visible />
   </div>
 </section>
-
-<script>
-  import { trackEvent } from '../../lib/analytics';
-
-  // Track FAQ expand events via custom event on accordion buttons
-  document.querySelectorAll('#faq button[aria-expanded]').forEach((btn, index) => {
-    btn.addEventListener('click', () => {
-      const isExpanding = btn.getAttribute('aria-expanded') === 'false';
-      if (isExpanding) {
-        const questionText = btn.textContent?.trim().slice(0, 100) || '';
-        trackEvent({
-          name: 'faq_expanded',
-          params: { question_text: questionText, question_index: index },
-        });
-      }
-    });
-  });
-</script>
