@@ -69,7 +69,7 @@ export async function sendDeliveryEmail({
 
   const resend = getResend();
   const { error } = await resend.emails.send({
-    from: 'Prompts para tu Negocio <entrega@updates.promptsparatunegocio.com>',
+    from: 'Prompts para tu Negocio <entrega@promptsparatunegocio.com>',
     to,
     subject: '🎉 Tu Pack de 275+ Prompts IA está listo',
     html,
