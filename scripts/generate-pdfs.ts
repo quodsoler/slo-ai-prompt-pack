@@ -7,7 +7,7 @@ import { extractHeadings, buildTocHtml } from './lib/toc-generator.js';
 import { launchBrowser, closeBrowser, getHeadingPageNumbers, renderPdf } from './lib/pdf-builder.js';
 
 const OUTPUT_DIR = resolve(import.meta.dirname, '../output');
-const PUBLIC_DIR = resolve(import.meta.dirname, '../public/descargas');
+const PRIVATE_DIR = resolve(import.meta.dirname, '../private/pdfs');
 
 const args = process.argv.slice(2);
 const mainOnly = args.includes('--main-only');
@@ -160,13 +160,13 @@ async function main(): Promise<void> {
     await closeBrowser();
   }
 
-  // Copy PDFs to public/descargas/ for deployment
-  mkdirSync(PUBLIC_DIR, { recursive: true });
+  // Copy PDFs to private/pdfs/ for gated download API
+  mkdirSync(PRIVATE_DIR, { recursive: true });
   const pdfFiles = readdirSync(OUTPUT_DIR).filter((f) => f.endsWith('.pdf'));
   for (const file of pdfFiles) {
-    copyFileSync(join(OUTPUT_DIR, file), join(PUBLIC_DIR, file));
+    copyFileSync(join(OUTPUT_DIR, file), join(PRIVATE_DIR, file));
   }
-  console.log(`\nCopied ${pdfFiles.length} PDFs to public/descargas/`);
+  console.log(`\nCopied ${pdfFiles.length} PDFs to private/pdfs/`);
 
   console.log('\nDone!');
 }

@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+import { generateDownloadToken } from './download-token';
 
 let _resend: Resend | null = null;
 
@@ -26,8 +27,9 @@ export async function sendDeliveryEmail({
   hasUpsell,
 }: DeliveryEmailParams): Promise<void> {
   const siteUrl = (import.meta.env.PUBLIC_SITE_URL || 'https://promptsparatunegocio.com').replace(/\/$/, '');
-  const packPdfUrl = `${siteUrl}/descargas/pack-275-prompts-ia-marketing-negocios.pdf`;
-  const guidePdfUrl = `${siteUrl}/descargas/guia-completa-ia-marketing-negocios.pdf`;
+  const token = generateDownloadToken(to);
+  const packPdfUrl = `${siteUrl}/api/download?file=pack&token=${encodeURIComponent(token)}`;
+  const guidePdfUrl = `${siteUrl}/api/download?file=guide&token=${encodeURIComponent(token)}`;
   const greeting = customerName ? `Hola ${customerName}` : 'Hola';
 
   const html = `<!DOCTYPE html>

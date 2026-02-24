@@ -19,8 +19,8 @@ if (!sessionId) {
 let amountPaid = 0;
 let lineItems: { description: string; amount: number; quantity: number }[] = [];
 
-const packPdfUrl = '/descargas/pack-275-prompts-ia-marketing-negocios.pdf';
-const guidePdfUrl = '/descargas/guia-completa-ia-marketing-negocios.pdf';
+const packPdfUrl = `/api/download?file=pack&session_id=${encodeURIComponent(sessionId)}`;
+const guidePdfUrl = `/api/download?file=guide&session_id=${encodeURIComponent(sessionId)}`;
 
 try {
   const stripe = getStripe();

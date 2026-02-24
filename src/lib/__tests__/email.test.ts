@@ -10,6 +10,7 @@ vi.mock('resend', () => ({
 Object.assign(import.meta.env, {
   RESEND_API_KEY: 're_test_123',
   PUBLIC_SITE_URL: 'https://example.com',
+  DOWNLOAD_TOKEN_SECRET: 'test-secret-for-unit-tests-only',
 });
 
 import { sendDeliveryEmail } from '../email';
@@ -35,24 +36,24 @@ describe('email', () => {
     );
   });
 
-  it('includes pack PDF URL in email HTML', async () => {
+  it('includes gated pack download URL in email HTML', async () => {
     await sendDeliveryEmail({
       to: 'buyer@example.com',
       hasUpsell: false,
     });
 
     const call = mockSend.mock.calls[0][0];
-    expect(call.html).toContain('https://example.com/descargas/pack-275-prompts-ia-marketing-negocios.pdf');
+    expect(call.html).toContain('https://example.com/api/download?file=pack&token=');
   });
 
-  it('includes guide PDF URL in email HTML', async () => {
+  it('includes gated guide download URL in email HTML', async () => {
     await sendDeliveryEmail({
       to: 'buyer@example.com',
       hasUpsell: false,
     });
 
     const call = mockSend.mock.calls[0][0];
-    expect(call.html).toContain('https://example.com/descargas/guia-completa-ia-marketing-negocios.pdf');
+    expect(call.html).toContain('https://example.com/api/download?file=guide&token=');
   });
 
   it('includes customer name greeting when provided', async () => {

@@ -47,7 +47,9 @@ export default defineConfig({
     envValidation,
   ],
 
-  adapter: vercel(),
+  adapter: vercel({
+    includeFiles: ['./private/pdfs/**'],
+  }),
 
   vite: {
     plugins: [tailwindcss()],
