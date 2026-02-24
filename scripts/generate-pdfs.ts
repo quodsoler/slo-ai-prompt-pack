@@ -1,5 +1,5 @@
-import { writeFileSync, mkdirSync } from 'fs';
-import { resolve } from 'path';
+import { writeFileSync, mkdirSync, copyFileSync, readdirSync } from 'fs';
+import { resolve, join } from 'path';
 import { assembleMainProduct, assembleOrderBump, assembleGuideCompleta } from './lib/content-assembler.js';
 import { renderMarkdown, resetHeadingCounter, setCurrentSection } from './lib/markdown-parser.js';
 import { wrapDocument, mainCoverPage, bumpCoverPage, guideCoverPage, sectionDivider } from './lib/html-templates.js';
@@ -7,6 +7,7 @@ import { extractHeadings, buildTocHtml } from './lib/toc-generator.js';
 import { launchBrowser, closeBrowser, getHeadingPageNumbers, renderPdf } from './lib/pdf-builder.js';
 
 const OUTPUT_DIR = resolve(import.meta.dirname, '../output');
+const PUBLIC_DIR = resolve(import.meta.dirname, '../public/descargas');
 
 const args = process.argv.slice(2);
 const mainOnly = args.includes('--main-only');
@@ -158,6 +159,14 @@ async function main(): Promise<void> {
   } finally {
     await closeBrowser();
   }
+
+  // Copy PDFs to public/descargas/ for deployment
+  mkdirSync(PUBLIC_DIR, { recursive: true });
+  const pdfFiles = readdirSync(OUTPUT_DIR).filter((f) => f.endsWith('.pdf'));
+  for (const file of pdfFiles) {
+    copyFileSync(join(OUTPUT_DIR, file), join(PUBLIC_DIR, file));
+  }
+  console.log(`\nCopied ${pdfFiles.length} PDFs to public/descargas/`);
 
   console.log('\nDone!');
 }
