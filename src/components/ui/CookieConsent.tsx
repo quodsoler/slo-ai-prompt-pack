@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'preact/hooks';
-import { getConsentState, setConsentState, loadGTM, loadClarity } from '../../lib/cookie-consent';
+import { getConsentState, setConsentState, loadGTM } from '../../lib/cookie-consent';
 
 export default function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);
@@ -13,9 +13,8 @@ export default function CookieConsent() {
     if (!consent) {
       setIsVisible(true);
     } else if (consent.analytics) {
-      // Returning user with analytics consent: load tracking immediately
+      // Returning user with analytics consent: load GTM immediately
       loadGTM();
-      loadClarity();
     }
 
     // Re-open listener for footer link

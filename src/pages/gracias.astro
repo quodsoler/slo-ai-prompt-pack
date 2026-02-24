@@ -183,7 +183,7 @@ try {
 <script>
   import { trackEvent, initDataLayer } from '../lib/analytics';
   import { captureUTMParams } from '../lib/tracking';
-  import { getConsentState, loadGTM, loadClarity } from '../lib/cookie-consent';
+  import { getConsentState, loadGTM } from '../lib/cookie-consent';
 
   initDataLayer();
   captureUTMParams();
@@ -191,7 +191,6 @@ try {
   const consent = getConsentState();
   if (consent?.analytics) {
     loadGTM();
-    loadClarity();
   }
 
   // Fire purchase event with server-validated data

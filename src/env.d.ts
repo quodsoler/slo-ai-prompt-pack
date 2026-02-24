@@ -9,7 +9,6 @@ interface ImportMetaEnv {
   readonly DOWNLOAD_TOKEN_SECRET: string;
   readonly PUBLIC_GA4_MEASUREMENT_ID?: string;
   readonly PUBLIC_GTM_CONTAINER_ID?: string;
-  readonly PUBLIC_CLARITY_PROJECT_ID?: string;
   readonly PUBLIC_SITE_URL?: string;
 }
 
