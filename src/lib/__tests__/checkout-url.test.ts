@@ -106,14 +106,14 @@ describe('checkout-url', () => {
       vi.useRealTimers();
     });
 
-    it('fires cta_clicked and checkout_started analytics events', async () => {
+    it('fires cta_clicked and begin_checkout analytics events', async () => {
       await handleCtaClick('hero');
 
       expect(mockTrackEvent).toHaveBeenCalledWith(
         expect.objectContaining({ name: 'cta_clicked' })
       );
       expect(mockTrackEvent).toHaveBeenCalledWith(
-        expect.objectContaining({ name: 'checkout_started' })
+        expect.objectContaining({ name: 'begin_checkout' })
       );
     });
 
@@ -174,15 +174,16 @@ describe('checkout-url', () => {
       );
     });
 
-    it('includes product info in checkout_started event', async () => {
+    it('includes GA4 ecommerce data in begin_checkout event', async () => {
       await handleCtaClick('hero');
 
       expect(mockTrackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
-          name: 'checkout_started',
+          name: 'begin_checkout',
           params: expect.objectContaining({
-            product_name: 'Pack 275+ Prompts IA',
-            product_price: 27,
+            value: 27,
+            currency: 'EUR',
+            items: [{ item_id: 'pack-275-prompts', item_name: 'Pack 275+ Prompts IA', price: 27, quantity: 1 }],
           }),
         })
       );

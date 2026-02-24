@@ -73,34 +73,41 @@ describe('analytics', () => {
       });
     });
 
-    it('handles purchase_confirmed event correctly', () => {
+    it('handles purchase event correctly', () => {
       mockHasConsent.mockReturnValue(true);
 
       trackEvent({
-        name: 'purchase_confirmed',
-        params: { page: '/gracias', has_bump: true, has_upsell: false },
+        name: 'purchase',
+        params: {
+          transaction_id: 'cs_test_123',
+          value: 27,
+          currency: 'EUR',
+          items: [{ item_id: 'pack-275-prompts', item_name: 'Pack 275+ Prompts IA', price: 27, quantity: 1 }],
+        },
       });
 
       expect(window.dataLayer[0]).toEqual({
-        event: 'purchase_confirmed',
-        page: '/gracias',
-        has_bump: true,
-        has_upsell: false,
+        event: 'purchase',
+        transaction_id: 'cs_test_123',
+        value: 27,
+        currency: 'EUR',
+        items: [{ item_id: 'pack-275-prompts', item_name: 'Pack 275+ Prompts IA', price: 27, quantity: 1 }],
       });
     });
 
-    it('handles social_share_clicked event correctly', () => {
+    it('handles share event correctly', () => {
       mockHasConsent.mockReturnValue(true);
 
       trackEvent({
-        name: 'social_share_clicked',
-        params: { platform: 'linkedin', page_path: '/gracias' },
+        name: 'share',
+        params: { method: 'linkedin', content_type: 'page', item_id: '/gracias' },
       });
 
       expect(window.dataLayer[0]).toEqual({
-        event: 'social_share_clicked',
-        platform: 'linkedin',
-        page_path: '/gracias',
+        event: 'share',
+        method: 'linkedin',
+        content_type: 'page',
+        item_id: '/gracias',
       });
     });
 

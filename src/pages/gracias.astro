@@ -176,8 +176,8 @@ try {
   </div>
 </BaseLayout>
 
-<script is:inline define:vars={{ sessionId, amountPaid }}>
-  window.__purchaseData = { sessionId, amountPaid };
+<script is:inline define:vars={{ sessionId, amountPaid, lineItems }}>
+  window.__purchaseData = { sessionId, amountPaid, lineItems };
 </script>
 
 <script>
@@ -194,14 +194,19 @@ try {
   }
 
   // Fire purchase event with server-validated data
-  const data = (window as unknown as { __purchaseData: { sessionId: string; amountPaid: number } }).__purchaseData;
+  const data = (window as unknown as { __purchaseData: { sessionId: string; amountPaid: number; lineItems: { description: string; amount: number; quantity: number }[] } }).__purchaseData;
   trackEvent({
-    name: 'purchase_confirmed',
+    name: 'purchase',
     params: {
-      page: '/gracias',
       transaction_id: data.sessionId,
       value: data.amountPaid,
       currency: 'EUR',
+      items: data.lineItems.map((item, i) => ({
+        item_id: `item-${i}`,
+        item_name: item.description,
+        price: item.amount,
+        quantity: item.quantity,
+      })),
     },
   });
 

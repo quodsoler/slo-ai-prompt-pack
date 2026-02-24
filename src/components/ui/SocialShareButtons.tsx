@@ -34,8 +34,8 @@ export default function SocialShareButtons({ shareUrl }: SocialShareButtonsProps
 
   function handleClick(platform: 'linkedin' | 'twitter' | 'whatsapp') {
     trackEvent({
-      name: 'social_share_clicked',
-      params: { platform, page_path: '/gracias' },
+      name: 'share',
+      params: { method: platform, content_type: 'page', item_id: '/gracias' },
     });
   }
 

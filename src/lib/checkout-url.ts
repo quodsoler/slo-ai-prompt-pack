@@ -35,11 +35,11 @@ export async function handleCtaClick(section: string): Promise<void> {
     },
   });
   trackEvent({
-    name: 'checkout_started',
+    name: 'begin_checkout',
     params: {
-      source_section: section,
-      product_name: 'Pack 275+ Prompts IA',
-      product_price: 27,
+      value: 27,
+      currency: 'EUR',
+      items: [{ item_id: 'pack-275-prompts', item_name: 'Pack 275+ Prompts IA', price: 27, quantity: 1 }],
     },
   });
 
