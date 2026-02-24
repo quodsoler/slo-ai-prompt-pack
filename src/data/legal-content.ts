@@ -151,9 +151,8 @@ export const termsAndConditions = {
     {
       heading: '2. Naturaleza del Producto',
       content: `El Producto es un contenido digital de descarga/acceso inmediato que incluye:
-- 275+ prompts de inteligencia artificial organizados por categorías
-- Acceso a workspace de Notion
-- PDF descargable
+- 275+ prompts de inteligencia artificial organizados por categorías (PDF)
+- Guía Completa de IA para Marketing y Negocios (PDF)
 - Guía de inicio rápido
 - Actualizaciones futuras
 

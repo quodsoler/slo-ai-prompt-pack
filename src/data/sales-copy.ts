@@ -1,46 +1,46 @@
 export const painPoints = [
   {
-    lead: '¿Horas perdidas creando contenido?',
-    text: 'Llevas horas delante de la pantalla intentando escribir un post para redes sociales. Sabes que tendrías que publicar más, que tu competencia ya lo está haciendo, pero cada vez que te sientas a crear contenido... el cursor parpadea y tu mente se queda en blanco.',
+    lead: 'Domingo a las 11 de la noche. No tienes nada publicado.',
+    text: 'Otra semana sin contenido. Sabes que deberías publicar, que tu competencia publica cada día, pero cada vez que te sientas a escribir un post... se te va una hora y media y acabas con algo que ni tú te crees. Mañana será lunes y seguirás invisible.',
   },
   {
-    lead: '¿ChatGPT te da resultados genéricos?',
-    text: 'Has probado ChatGPT, pero los resultados son genéricos y suenan a robot. Le pides que te escriba un email y te devuelve algo que parece sacado de un manual de instrucciones americano. Nada que ver con cómo hablas tú ni con lo que esperan tus clientes en España.',
+    lead: 'ChatGPT te responde como si fueras una empresa americana.',
+    text: '"Estimado cliente, nos complace informarle..." Le pides un email para un cliente en Sevilla y te devuelve algo que parece traducido del inglés por Google. Tus clientes hablan español de España, no de manual corporativo. Y tú no tienes tiempo para reescribir cada texto desde cero.',
   },
   {
-    lead: '¿Tu competencia te adelanta con IA?',
-    text: 'Mientras tanto, tu competencia ya está usando IA para producir el triple de contenido en la mitad de tiempo. Ves sus publicaciones, sus emails, sus propuestas comerciales... y te preguntas cómo lo hacen. La respuesta es simple: saben qué pedirle a la IA. Tú todavía no.',
+    lead: 'Trabajas 10 horas al día y no facturas ni la mitad.',
+    text: 'Presupuestos, facturas, la gestoría, emails de seguimiento, la web, las redes... El día se te va en tareas que no generan ingresos. Llegas a las 8 de la tarde agotado y no has hecho NI UNA cosa que mueva tu negocio hacia adelante. La trampa del autónomo.',
   },
   {
-    lead: '¿Tareas administrativas que no paran?',
-    text: 'Como autónomo, cada hora que pierdes en tareas administrativas es una hora que no facturas. Entre la gestoría, los presupuestos, las facturas, los emails a clientes y la planificación... el día se te va volando. Y al final, lo que más importa — vender y atender a tus clientes — queda siempre para "mañana".',
+    lead: 'Tu competencia produce el triple de contenido. Con la mitad de esfuerzo.',
+    text: 'Ves sus posts diarios, sus newsletters semanales, sus propuestas comerciales impecables. ¿Tienen un equipo de 5 personas? No. Tienen los prompts correctos. Saben exactamente qué pedirle a la IA. Tú todavía estás en "Escríbeme algo sobre..." y rezando.',
   },
   {
-    lead: '¿Cada día más atrás?',
-    text: 'La IA no es el futuro. Es el presente. Y cada día que pasa sin dominarla, te quedas un poco más atrás. No necesitas un máster en inteligencia artificial. Solo necesitas saber exactamente qué decirle para que trabaje para ti.',
+    lead: 'Cada día sin dominar la IA, tu negocio se queda más atrás.',
+    text: 'La IA no es el futuro. Es lo que ya están usando los profesionales que te están quitando clientes hoy. No necesitas un máster. No necesitas un curso de 40 horas. Solo necesitas las instrucciones correctas. Y las necesitas ya.',
   },
 ] as const;
 
 export const differentiators = [
   {
-    title: 'Culturalmente adaptado',
-    text: 'Los prompts están escritos pensando en el mercado español, con referencias a la realidad del autónomo, la normativa local y el estilo de comunicación que funciona aquí.',
+    title: '90 segundos. Resultado profesional.',
+    text: 'Copias el prompt, lo pegas en ChatGPT o Claude, y tienes un texto que parece escrito por un copywriter profesional. Sin editar. Sin retocar. Listo para enviar.',
   },
   {
-    title: 'Listo para copiar y pegar',
-    text: 'No necesitas saber nada de IA. Abres el prompt, lo copias, lo pegas en ChatGPT o Claude, y tienes el resultado en segundos.',
+    title: 'Hecho para el mercado español. No traducido.',
+    text: 'Cada prompt está escrito pensando en cómo se hace negocio en España: la realidad del autónomo, el tono que funciona con clientes españoles, la normativa local. Nada de traducciones del inglés.',
   },
   {
-    title: 'Tres grandes secciones',
-    text: 'Más de 105 prompts para marketing y copywriting + más de 105 prompts para gestión de negocio y autónomo + 65 prompts de social media.',
+    title: 'Incluye guía de 42 páginas para dominar la IA.',
+    text: 'No solo te damos los prompts: te enseñamos el porqué. 10 capítulos con el framework RACE, técnicas avanzadas, workflows diarios y cómo crear tu propia voz de marca con IA.',
   },
   {
-    title: 'Mini-guía de inicio rápido',
-    text: 'Para que sepas exactamente por dónde empezar y cómo sacarle el máximo partido desde el día uno.',
+    title: '275+ prompts que cubren tu negocio completo.',
+    text: 'Marketing, copywriting, ventas, gestión, finanzas, redes sociales, SEO, email... Todo lo que un autónomo o freelancer necesita, en un solo pack.',
   },
   {
-    title: 'Formato Notion + PDF',
-    text: 'Accede desde cualquier dispositivo, busca por categoría y encuentra el prompt que necesitas en segundos.',
+    title: 'Actualizaciones de por vida. Sin coste extra.',
+    text: 'La IA evoluciona y nosotros evolucionamos contigo. Cada nuevo prompt, cada mejora, cada actualización te llega sin pagar un céntimo más.',
   },
 ] as const;
 
@@ -93,11 +93,11 @@ export const benefits = [
 
 export const finalCta = {
   urgencyBanner:
-    'Oferta de lanzamiento: este precio no durará para siempre. Una vez terminemos la fase de lanzamiento, el precio subirá a 67 €.',
+    'La Guía Completa de 42 páginas se incluye GRATIS solo durante esta fase de lanzamiento. Precio actual: 27 € en lugar de 67 €.',
   optionA:
-    'Seguir perdiendo horas cada semana escribiendo contenido desde cero, luchando con la IA y viendo cómo tu competencia te adelanta. Gratis, pero te costará mucho más a largo plazo.',
+    'Seguir perdiendo horas cada semana, peleándote con la IA, reescribiendo textos genéricos y viendo cómo otros profesionales te adelantan. Gratis hoy, pero el coste real son miles de euros en productividad perdida.',
   optionB:
-    'Invertir 27 euros hoy, tener 275+ prompts profesionales listos para usar en los próximos 5 minutos y empezar a recuperar tiempo desde esta misma semana.',
-  closingHeadline: 'Empieza a Trabajar con IA como un Profesional. Hoy.',
-  ps: 'Cada día que pasa sin usar IA de forma efectiva es un día que pierdes horas de productividad que nunca recuperarás. Por 27 euros — menos de lo que cuesta una cena — tienes acceso a la colección de prompts más completa del mercado en español. Y si no funciona para ti, te devolvemos hasta el último céntimo. No tienes nada que perder y +10 horas a la semana que ganar.',
+    'Invertir 27 € ahora, tener 275+ prompts profesionales + la guía de 42 páginas en los próximos 5 minutos, y empezar a recuperar +10 horas a la semana. Con garantía 10x de 30 días.',
+  closingHeadline: 'Tu Competencia Ya Usa IA. ¿Cuánto Más Vas a Esperar?',
+  ps: '27 euros es lo que cuesta un menú del día con café. La diferencia es que el menú se acaba en 30 minutos. Estos prompts van a ahorrarte más de 10 horas cada semana, durante meses, durante años. Haz la cuenta: 10 horas × 4 semanas × 12 meses = 480 horas al año. A 30 €/hora, eso son 14.400 € en productividad. Por 27 €. Y si no te convence, te devolvemos hasta el último céntimo. El único riesgo real es no probarlo.',
 } as const;

@@ -20,7 +20,7 @@ export const promptExamples: PromptExample[] = [
     promptText:
       'Redacta un email profesional pero firme para reclamar el pago de una factura vencida hace [X] días a un cliente con el que quiero mantener buena relación comercial. El importe es de [CANTIDAD] euros. El tono debe ser asertivo pero respetuoso, recordando las condiciones acordadas. Incluye una fecha límite concreta para el pago y menciona de forma sutil las consecuencias de no pagar. Adaptado al contexto empresarial español.',
     responsePreview:
-      'Un email que consigue que te paguen sin quemar la relación con el cliente. Probado y perfeccionado con decenas de autónomos reales.',
+      'Un email que consigue que te paguen sin quemar la relación con el cliente.',
   },
   {
     title: 'Página de Venta con Fórmula PAS',

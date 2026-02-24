@@ -1,6 +1,5 @@
 ---
 import CtaButton from '../ui/CtaButton.astro';
-import Badge from '../ui/Badge.astro';
 import { productConfig } from '../../data/product-config';
 import { formatPrice } from '../../lib/format';
 ---
@@ -8,7 +7,7 @@ import { formatPrice } from '../../lib/format';
 <section id="oferta" class="py-16 md:py-24 px-4">
   <div class="max-w-3xl mx-auto text-center">
     <h2 class="text-2xl md:text-3xl font-bold mb-12">
-      Hagamos cuentas rápidas
+      Lo que Obtendrías Si Contrataras Todo Esto por Separado
     </h2>
 
     <!-- Value stack table -->
@@ -28,10 +27,10 @@ import { formatPrice } from '../../lib/format';
     </div>
 
     <!-- Comparison -->
+    <div id="oferta-precio" class="scroll-mt-8"></div>
     <p class="text-text-secondary mb-8 leading-relaxed max-w-2xl mx-auto">
-      Un consultor de marketing te cobra entre 500 y 2.000 € por una estrategia de contenido.
-      Una agencia te cobra entre 300 y 800 € al mes solo por gestionar tus redes.
-      Este pack te da todo lo que necesitas por una fracción del coste.
+      Un copywriter freelance cobra entre 50 y 150 € por cada texto. Una agencia de marketing, entre 500 y 2.000 € al mes.
+      Un asistente virtual, mínimo 800 € al mes. Todo lo que hacen esos profesionales, lo tienes aquí por una fracción del coste.
     </p>
 
     <!-- Pricing -->
@@ -47,17 +46,21 @@ import { formatPrice } from '../../lib/format';
       Pago único. Acceso de por vida. Sin suscripciones.
     </p>
 
-    <!-- Guarantee badge -->
-    <div class="mb-8">
-      <Badge variant="green">Garantía de 30 días — sin preguntas</Badge>
+    <!-- Guarantee block -->
+    <div class="mb-8 bg-success/5 border border-success/20 rounded-2xl p-6 text-center max-w-md mx-auto">
+      <div class="text-4xl mb-3">🛡️</div>
+      <h3 class="text-lg font-bold text-text-primary mb-2">Garantía "10x o Te Devolvemos Todo"</h3>
+      <p class="text-sm text-text-secondary leading-relaxed">
+        {productConfig.guarantee}
+      </p>
     </div>
 
     <!-- CTA -->
     <CtaButton section="price_offer" label={productConfig.ctaLabels.priceOffer} />
 
-    <!-- Order bump teaser -->
-    <p class="mt-6 text-sm text-text-muted">
-      Después de tu compra podrás añadir el Sistema Completo de IA por solo 17 €
+    <!-- Instant access reassurance -->
+    <p class="mt-4 text-sm text-text-muted">
+      Acceso inmediato. En 5 minutos estarás usando tu primer prompt.
     </p>
   </div>
 </section>

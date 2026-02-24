@@ -7,7 +7,7 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
     const originalSessionId = body.sessionId;
-    const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://example.com';
+    const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://promptsparatunegocio.com';
 
     const stripe = getStripe();
 

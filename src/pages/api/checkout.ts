@@ -7,7 +7,7 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
     const utmParams = body.utmParams ?? {};
-    const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://example.com';
+    const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://promptsparatunegocio.com';
 
     const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
@@ -30,6 +30,7 @@ export const POST: APIRoute = async ({ request }) => {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (err) {
+    console.error('[api/checkout] Error:', err);
     const message = err instanceof Error ? err.message : 'Unknown error';
     return new Response(JSON.stringify({ error: message }), {
       status: 500,

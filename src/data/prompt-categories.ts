@@ -164,18 +164,18 @@ export const promptCategories: PromptCategory[] = [
 
 export const bonusItems = [
   {
-    title: 'Guía de Inicio Rápido',
+    title: 'Guía Completa: Cómo Usar la IA (42 páginas)',
     description:
-      'Cómo instalar y configurar ChatGPT y Claude, los 5 principios para escribir prompts que dan resultados excelentes, y por dónde empezar según tu perfil.',
+      '10 capítulos: framework RACE, técnicas avanzadas, workflows diarios, voz de marca, privacidad y más. Para que no solo copies y pegues, sino que domines la IA.',
   },
   {
-    title: 'Índice de Referencia Rápida',
+    title: 'Sistema de Inicio Rápido',
     description:
-      'Tabla completa con los 275+ prompts organizados por objetivo. Busca por categoría, por tiempo disponible o por tipo de resultado.',
+      'De cero a tu primer resultado en 5 minutos. Configuración, principios clave y por dónde empezar según tu perfil.',
   },
   {
-    title: 'Formato Dual: Notion + PDF',
+    title: 'Índice de Búsqueda por Objetivo',
     description:
-      'Workspace de Notion navegable con buscador y favoritos, más PDF descargable para acceso offline.',
+      'Tabla completa con los 275+ prompts organizados por objetivo. Busca por categoría, tiempo disponible o tipo de resultado.',
   },
 ];

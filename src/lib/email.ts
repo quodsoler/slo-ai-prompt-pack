@@ -25,8 +25,9 @@ export async function sendDeliveryEmail({
   customerName,
   hasUpsell,
 }: DeliveryEmailParams): Promise<void> {
-  const notionUrl = import.meta.env.DELIVERY_NOTION_URL;
-  const pdfUrl = import.meta.env.DELIVERY_PDF_URL;
+  const siteUrl = (import.meta.env.PUBLIC_SITE_URL || 'https://promptsparatunegocio.com').replace(/\/$/, '');
+  const packPdfUrl = `${siteUrl}/descargas/pack-275-prompts-ia-marketing-negocios.pdf`;
+  const guidePdfUrl = `${siteUrl}/descargas/guia-completa-ia-marketing-negocios.pdf`;
   const greeting = customerName ? `Hola ${customerName}` : 'Hola';
 
   const html = `<!DOCTYPE html>
@@ -38,16 +39,16 @@ export async function sendDeliveryEmail({
       <h1 style="color:#a78bfa;font-size:24px;margin:0 0 16px;">${greeting}, tu pack está listo 🎉</h1>
       <p style="color:#d1d5db;font-size:16px;line-height:1.6;margin:0 0 24px;">
         Gracias por tu compra del <strong style="color:#fff;">Pack de 275+ Prompts IA para Marketing y Negocios</strong>.
-        Aquí tienes tus enlaces de acceso:
+        Aquí tienes tus enlaces de descarga:
       </p>
       <div style="margin:0 0 16px;">
-        <a href="${notionUrl}" style="display:inline-block;background:#7c3aed;color:#fff;text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:600;font-size:16px;">
-          Abrir en Notion
+        <a href="${packPdfUrl}" style="display:inline-block;background:#7c3aed;color:#fff;text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:600;font-size:16px;">
+          Descargar Pack de Prompts (PDF)
         </a>
       </div>
       <div style="margin:0 0 24px;">
-        <a href="${pdfUrl}" style="display:inline-block;background:#1d4ed8;color:#fff;text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:600;font-size:16px;">
-          Descargar PDF
+        <a href="${guidePdfUrl}" style="display:inline-block;background:#1d4ed8;color:#fff;text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:600;font-size:16px;">
+          Descargar Guía Completa (PDF)
         </a>
       </div>
       ${hasUpsell ? `<div style="background:#7c3aed20;border:1px solid #7c3aed40;border-radius:8px;padding:16px;margin:0 0 24px;">
@@ -66,7 +67,7 @@ export async function sendDeliveryEmail({
 
   const resend = getResend();
   const { error } = await resend.emails.send({
-    from: 'Pack Prompts IA <entrega@updates.example.com>',
+    from: 'Prompts para tu Negocio <entrega@updates.promptsparatunegocio.com>',
     to,
     subject: '🎉 Tu Pack de 275+ Prompts IA está listo',
     html,

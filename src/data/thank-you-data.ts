@@ -9,7 +9,7 @@ export const accessSteps = [
     step: 2,
     title: 'Accede al contenido',
     description:
-      'Abre el enlace de Notion para acceder a tu workspace completo o descarga el PDF para tener una copia offline.',
+      'Descarga tus PDFs directamente desde esta página o desde el email que recibirás en los próximos minutos.',
   },
   {
     step: 3,

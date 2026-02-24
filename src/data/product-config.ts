@@ -3,30 +3,29 @@ export const productConfig = {
   price: 27,
   originalPrice: 67,
   currency: 'EUR',
-  totalValue: 2450,
 
   headline:
-    'Copia, Pega y Lanza: 275+ Prompts de IA Listos para Usar que Te Ahorran +10 Horas a la Semana en Marketing y Gestión de Tu Negocio',
+    'Deja de Perder Horas con la IA. 275+ Prompts Profesionales que Trabajan por Ti Desde el Minuto Uno.',
   subheadline:
-    'La colección más completa de prompts de inteligencia artificial diseñada específicamente para profesionales, autónomos y emprendedores en España. Sin cursos largos. Sin tecnicismos. Solo resultados desde el minuto uno.',
+    'Copia, pega y obtén resultados profesionales en 90 segundos. Marketing, ventas, contenido, gestión… Todo adaptado al mercado español. Sin cursos. Sin tecnicismos. Solo resultados.',
   preheadline:
-    'El 73% de los profesionales en España ya están usando IA en su trabajo diario. Los que no, están perdiendo horas cada semana en tareas que podrían resolverse en minutos.',
+    'Para autónomos, freelancers y emprendedores en España que quieren dejar de perder tiempo con la IA y empezar a ganar dinero con ella.',
 
   socialProof:
-    'Usado por profesionales de marketing en toda España | Compatible con ChatGPT y Claude',
+    'Compatible con ChatGPT, Claude y Gemini | Formato PDF | Acceso inmediato',
 
   valueStack: [
-    { item: '105+ Prompts de Marketing y Copywriting', value: 197 },
-    { item: '105+ Prompts de Business y Autónomo', value: 197 },
-    { item: '65+ Prompts de Social Media', value: 147 },
-    { item: 'Guía de Inicio Rápido con la IA', value: 47 },
-    { item: 'Índice de Referencia Rápida', value: 27 },
-    { item: 'Formato dual: Notion + PDF', value: 17 },
-    { item: 'Actualizaciones futuras incluidas', value: 97 },
+    { item: '105+ Prompts de Marketing y Copywriting — emails, posts, páginas de venta, SEO, anuncios', value: 297 },
+    { item: '105+ Prompts de Gestión de Negocio — propuestas, contratos, cobros, planificación, finanzas', value: 297 },
+    { item: '65+ Prompts de Social Media — Instagram, LinkedIn, YouTube, Pinterest, estrategia', value: 197 },
+    { item: 'BONUS: Guía Completa de IA para Marketing y Negocios (42 págs., 10 capítulos)', value: 197 },
+    { item: 'BONUS: Sistema de Inicio Rápido — de cero a resultados en 5 minutos', value: 47 },
+    { item: 'BONUS: Índice de Búsqueda por Objetivo — encuentra el prompt exacto en segundos', value: 27 },
+    { item: 'BONUS: Actualizaciones de por vida incluidas', value: 97 },
   ],
 
   guarantee:
-    'Compra sin ningún riesgo. Si en los próximos 30 días sientes que el pack no te ha ahorrado al menos 10 veces lo que has pagado, te devolvemos el 100% de tu dinero. Sin preguntas. Sin formularios. Sin complicaciones.',
+    'Garantía "10x o Te Devolvemos Todo." Usa los prompts durante 30 días completos. Si no recuperas al menos 10 veces los 27 € que has invertido — ya sea en horas ahorradas, contenido creado o propuestas enviadas — te devolvemos hasta el último céntimo. Un email. Sin preguntas. Sin formularios. El riesgo es 100% nuestro.',
 
   upsell: {
     name: 'Sistema Completo de IA',
@@ -36,10 +35,10 @@ export const productConfig = {
   },
 
   ctaLabels: {
-    hero: 'Quiero Mis 275+ Prompts Ahora — 27 €',
-    priceOffer: 'Sí, quiero mis 275+ prompts por solo 27 €',
-    final: 'Quiero Mis 275+ Prompts Ahora — 27 €',
-    stickyBar: 'Quiero Mis Prompts',
+    hero: 'Quiero Mis 275+ Prompts + Guía Gratis',
+    priceOffer: 'Sí, quiero todo por solo 27 €',
+    final: 'Quiero Empezar a Ahorrar Horas Hoy — 27 €',
+    stickyBar: 'Conseguir Mis Prompts — 27 €',
   },
 } as const;
 

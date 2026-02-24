@@ -9,8 +9,7 @@ vi.mock('resend', () => ({
 
 Object.assign(import.meta.env, {
   RESEND_API_KEY: 're_test_123',
-  DELIVERY_NOTION_URL: 'https://notion.so/test-workspace',
-  DELIVERY_PDF_URL: 'https://cdn.example.com/pack.pdf',
+  PUBLIC_SITE_URL: 'https://example.com',
 });
 
 import { sendDeliveryEmail } from '../email';
@@ -36,24 +35,24 @@ describe('email', () => {
     );
   });
 
-  it('includes Notion URL in email HTML', async () => {
+  it('includes pack PDF URL in email HTML', async () => {
     await sendDeliveryEmail({
       to: 'buyer@example.com',
       hasUpsell: false,
     });
 
     const call = mockSend.mock.calls[0][0];
-    expect(call.html).toContain('https://notion.so/test-workspace');
+    expect(call.html).toContain('https://example.com/descargas/pack-275-prompts-ia-marketing-negocios.pdf');
   });
 
-  it('includes PDF URL in email HTML', async () => {
+  it('includes guide PDF URL in email HTML', async () => {
     await sendDeliveryEmail({
       to: 'buyer@example.com',
       hasUpsell: false,
     });
 
     const call = mockSend.mock.calls[0][0];
-    expect(call.html).toContain('https://cdn.example.com/pack.pdf');
+    expect(call.html).toContain('https://example.com/descargas/guia-completa-ia-marketing-negocios.pdf');
   });
 
   it('includes customer name greeting when provided', async () => {
