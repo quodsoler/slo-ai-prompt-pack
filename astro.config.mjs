@@ -48,7 +48,11 @@ export default defineConfig({
   ],
 
   adapter: vercel({
-    includeFiles: ['./private/pdfs/**'],
+    includeFiles: [
+      './private/pdfs/pack-275-prompts-ia-marketing-negocios.pdf',
+      './private/pdfs/pack-50-prompts-automatizacion-avanzada.pdf',
+      './private/pdfs/guia-completa-ia-marketing-negocios.pdf',
+    ],
   }),
 
   vite: {
