@@ -11,12 +11,19 @@ describe('cookie-consent', () => {
   });
 
   describe('getConsentState', () => {
-    it('always returns consent granted', () => {
+    it('returns null when no consent recorded', () => {
+      const state = getConsentState();
+      expect(state).toBeNull();
+    });
+
+    it('returns stored consent after setConsentState', () => {
+      setConsentState({ analytics: true, marketing: false });
+
       const state = getConsentState();
       expect(state).not.toBeNull();
-      expect(state.analytics).toBe(true);
-      expect(state.marketing).toBe(true);
-      expect(state.necessary).toBe(true);
+      expect(state!.analytics).toBe(true);
+      expect(state!.marketing).toBe(false);
+      expect(state!.necessary).toBe(true);
     });
   });
 
@@ -47,13 +54,23 @@ describe('cookie-consent', () => {
   });
 
   describe('hasAnalyticsConsent', () => {
-    it('always returns true', () => {
+    it('returns false when no consent recorded', () => {
+      expect(hasAnalyticsConsent()).toBe(false);
+    });
+
+    it('returns true after granting analytics consent', () => {
+      setConsentState({ analytics: true, marketing: false });
       expect(hasAnalyticsConsent()).toBe(true);
     });
   });
 
   describe('hasMarketingConsent', () => {
-    it('always returns true', () => {
+    it('returns false when no consent recorded', () => {
+      expect(hasMarketingConsent()).toBe(false);
+    });
+
+    it('returns true after granting marketing consent', () => {
+      setConsentState({ analytics: false, marketing: true });
       expect(hasMarketingConsent()).toBe(true);
     });
   });

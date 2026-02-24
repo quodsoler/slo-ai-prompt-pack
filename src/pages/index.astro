@@ -76,16 +76,17 @@ import { faqItems } from '../data/faq-items';
 <script>
   import { trackEvent, initDataLayer } from '../lib/analytics';
   import { captureUTMParams } from '../lib/tracking';
-  import { getConsentState, loadGTM } from '../lib/cookie-consent';
+  import { getConsentState, loadGTM, loadClarity } from '../lib/cookie-consent';
 
   // Initialize
   initDataLayer();
   captureUTMParams();
 
-  // Load GTM if consent already given
+  // Load tracking if consent already given
   const consent = getConsentState();
   if (consent?.analytics) {
     loadGTM();
+    loadClarity();
   }
 
   // Scroll depth tracking

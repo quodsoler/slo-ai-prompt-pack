@@ -18,14 +18,19 @@ const DEFAULT_STATE: ConsentState = {
   version: CURRENT_VERSION,
 };
 
-/** Consent is always granted — no banner needed. */
-export function getConsentState(): ConsentState {
-  return {
-    ...DEFAULT_STATE,
-    analytics: true,
-    marketing: true,
-    timestamp: new Date().toISOString(),
-  };
+/** Read persisted consent from localStorage. Returns null if no consent recorded yet. */
+export function getConsentState(): ConsentState | null {
+  if (typeof window === 'undefined') return null;
+
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as ConsentState;
+    if (parsed.version !== CURRENT_VERSION) return null;
+    return { ...DEFAULT_STATE, ...parsed, necessary: true };
+  } catch {
+    return null;
+  }
 }
 
 /** Persist consent state to localStorage and first-party cookie. */
@@ -60,18 +65,21 @@ export function setConsentState(state: Partial<ConsentState>): void {
     // Cookie setting failed
   }
 
-  // Load GTM if analytics consent was granted
+  // Load tracking scripts if analytics consent was granted
   if (fullState.analytics) {
     loadGTM();
+    loadClarity();
   }
 }
 
 export function hasAnalyticsConsent(): boolean {
-  return true;
+  const state = getConsentState();
+  return state?.analytics ?? false;
 }
 
 export function hasMarketingConsent(): boolean {
-  return true;
+  const state = getConsentState();
+  return state?.marketing ?? false;
 }
 
 /** Dynamically inject GTM script. Only runs once. */
@@ -85,17 +93,39 @@ export function loadGTM(): void {
 
   gtmLoaded = true;
 
-  // Push cross-domain linker configuration before GTM initializes.
-  // GTM's GA4 Configuration tag should also have systeme.io in its cross-domain settings.
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({
     'gtm.start': new Date().getTime(),
     event: 'gtm.js',
   });
 
-  // GTM head script
   const script = document.createElement('script');
   script.async = true;
   script.src = `https://www.googletagmanager.com/gtm.js?id=${containerId}`;
+  document.head.appendChild(script);
+}
+
+/** Dynamically inject Microsoft Clarity script. Only runs once. */
+let clarityLoaded = false;
+export function loadClarity(): void {
+  if (typeof window === 'undefined' || clarityLoaded) return;
+
+  const projectId = (import.meta as unknown as { env: Record<string, string> }).env
+    .PUBLIC_CLARITY_PROJECT_ID;
+  if (!projectId) return;
+
+  clarityLoaded = true;
+
+  /* eslint-disable */
+  (window as any).clarity =
+    (window as any).clarity ||
+    function (...args: unknown[]) {
+      ((window as any).clarity.q = (window as any).clarity.q || []).push(args);
+    };
+  /* eslint-enable */
+
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.clarity.ms/tag/${projectId}`;
   document.head.appendChild(script);
 }
