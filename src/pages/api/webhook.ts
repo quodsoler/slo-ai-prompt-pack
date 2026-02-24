@@ -3,6 +3,7 @@ export const prerender = false;
 import type { APIRoute } from 'astro';
 import { getStripe } from '../../lib/stripe';
 import { sendDeliveryEmail } from '../../lib/email';
+import { saveCustomerRecord } from '../../lib/customers';
 
 export const POST: APIRoute = async ({ request }) => {
   const stripe = getStripe();
@@ -30,6 +31,20 @@ export const POST: APIRoute = async ({ request }) => {
     const email = session.customer_details?.email;
 
     if (email) {
+      // Save customer record to Blob (non-blocking — log errors but don't fail webhook)
+      try {
+        await saveCustomerRecord({
+          email,
+          name: session.customer_details?.name ?? null,
+          amount: session.amount_total ?? 0,
+          currency: session.currency ?? 'usd',
+          sessionId: session.id,
+          timestamp: new Date().toISOString(),
+        });
+      } catch (err) {
+        console.error('Failed to save customer record:', err);
+      }
+
       try {
         const hasUpsell = session.metadata?.type === 'upsell';
         await sendDeliveryEmail({
